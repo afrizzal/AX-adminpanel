@@ -1,0 +1,34 @@
+@media (min-width: 768px) {
+  .form-horizontal .control-label {
+    text-align: left !important;
+  }
+}
+
+.select2-container {
+ width: 100% !important;
+}
+
+#scroll {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #cccccc;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+    #scroll:hover {
+        background-color: #555;
+    }
+
+
+.swal2-popup {
+    font-size: 1.4rem !important;
+}

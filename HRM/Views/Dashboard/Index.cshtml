@@ -1,0 +1,336 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>Dashboard</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div id="DbAvgInventRM" class="col-md-6" style="display: none;">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Average Inventory Days Outstanding (RM Non Kayu)</h3>
+                    <div class="box-tools pull-right">
+                        <button id="btnRefreshDbAvgInventRM" type="button" class="btn btn-box-tool"><i class="fa fa-refresh"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md control-label">Period</label>
+                                <div class="col-md">
+                                    @Html.DropDownList("FilterYearAvgInventRM", null, new { @class = "form-control select2", @onchange = "ShowDashboardAvgInventRM()" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="col-md control-label">Business Unit</label>
+                                <div class="col-md">
+                                    @Html.DropDownList("FilterBUAvgInventRM", null, new { @class = "form-control select2", @onchange = "ShowDashboardAvgInventRM()" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="chart" id="DivAvgInventRM">
+                                <canvas id="ChartAvgInventRM"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="DbAvgInventKY" class="col-md-6" style="display: none;">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Average Inventory Days Outstanding (RM Kayu)</h3>
+                    <div class="box-tools pull-right">
+                        <button id="btnRefreshDbAvgInventKY" type="button" class="btn btn-box-tool"><i class="fa fa-refresh"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="col-md control-label">Period</label>
+                                <div class="col-md">
+                                    @Html.DropDownList("FilterYearAvgInventKY", null, new { @class = "form-control select2", @onchange = "ShowDashboardAvgInventKY()" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="col-md control-label">Business Unit</label>
+                                <div class="col-md">
+                                    @Html.DropDownList("FilterBUAvgInventKY", null, new { @class = "form-control select2", @onchange = "ShowDashboardAvgInventKY()" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="chart" id="DivAvgInventKY">
+                                <canvas id="ChartAvgInventKY"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+    function ShowDashboardAvgInventRM() {
+        $("#DbAvgInventRM").show();
+        $('#ChartAvgInventRM').remove();
+        $('#DivAvgInventRM').append('<canvas id="ChartAvgInventRM"></canvas>');
+        var AvgInventRMCanvas = $('#ChartAvgInventRM').get(0).getContext('2d');
+        var AvgInventRMChartData = {
+            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Moving Stock Ratio',
+                    borderColor: 'red',
+                    fill: false,
+                    borderWidth: 2,
+                    yAxisID: 'y-axis-2',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'line',
+                    label: 'Target Ratio',
+                    borderColor: 'black',
+                    fill: false,
+                    borderWidth: 2,
+                    yAxisID: 'y-axis-2',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'bar',
+                    label: 'Moving Stock',
+                    backgroundColor: 'blue',
+                    yAxisID: 'y-axis-1',
+                    stack: 'Stack 0',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'bar',
+                    label: 'Dead Stock',
+                    backgroundColor: 'grey',
+                    yAxisID: 'y-axis-1',
+                    stack: 'Stack 0',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'bar',
+                    label: 'Daily Usage Average',
+                    backgroundColor: 'green',
+                    yAxisID: 'y-axis-1',
+                    stack: 'Stack 1',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                }]
+        };
+        AvgInventRMChartData.labels.splice(0, AvgInventRMChartData.labels.length);
+        AvgInventRMChartData.datasets[0].data.splice(0, AvgInventRMChartData.datasets[0].data.length);
+        AvgInventRMChartData.datasets[1].data.splice(0, AvgInventRMChartData.datasets[1].data.length);
+        AvgInventRMChartData.datasets[2].data.splice(0, AvgInventRMChartData.datasets[2].data.length);
+        AvgInventRMChartData.datasets[3].data.splice(0, AvgInventRMChartData.datasets[3].data.length);
+        AvgInventRMChartData.datasets[4].data.splice(0, AvgInventRMChartData.datasets[4].data.length);
+        $("#btnRefreshDbAvgInventRM i").removeClass("fa-search");
+        $("#btnRefreshDbAvgInventRM i").addClass("fa-spinner fa-spin");
+        var FilterBusUnit = $('#FilterBUAvgInventRM option:selected').val();
+        var FilterYear = $('#FilterYearAvgInventRM option:selected').val();
+        $.getJSON("@(Url.Action("GetDataDashboardAvgInventory_RM"))", { FilterBusUnit: FilterBusUnit, FilterYear: FilterYear }, function (data) {
+            var i = 0;
+            $.each(data, function (key, val) {
+                AvgInventRMChartData.labels.splice(i, 1, val.periodmonth);
+                AvgInventRMChartData.datasets[0].data.splice(i, 1, val.ratio);
+                AvgInventRMChartData.datasets[1].data.splice(i, 1, val.ratiotarget);
+                AvgInventRMChartData.datasets[2].data.splice(i, 1, val.amount_active);
+                AvgInventRMChartData.datasets[3].data.splice(i, 1, val.amount_dead);
+                AvgInventRMChartData.datasets[4].data.splice(i, 1, val.amount_usg);
+                i++;
+            });
+            var AvgInventRMChart = new Chart(AvgInventRMCanvas, {
+                type: 'bar',
+                data: AvgInventRMChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: false
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        }],
+                        yAxes: [{
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            id: 'y-axis-1',
+                            stacked: true
+                        }, {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            id: 'y-axis-2',
+                            gridLines: {
+                                drawOnChartArea: false
+                            }
+                        }],
+                    }
+                }
+            });
+            setTimeout(function () {
+                $("#btnRefreshDbAvgInventRM i").removeClass("fa-spinner fa-spin");
+                $("#btnRefreshDbAvgInventRM i").addClass("fa-search");
+            }, 100);
+        });
+    }
+
+    function ShowDashboardAvgInventKY() {
+        $("#DbAvgInventKY").show();
+        $('#ChartAvgInventKY').remove();
+        $('#DivAvgInventKY').append('<canvas id="ChartAvgInventKY"></canvas>');
+        var AvgInventKYCanvas = $('#ChartAvgInventKY').get(0).getContext('2d');
+        var AvgInventKYChartData = {
+            labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Moving Stock Ratio',
+                    borderColor: 'red',
+                    fill: false,
+                    borderWidth: 2,
+                    yAxisID: 'y-axis-2',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'line',
+                    label: 'Target Ratio',
+                    borderColor: 'black',
+                    fill: false,
+                    borderWidth: 2,
+                    yAxisID: 'y-axis-2',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'bar',
+                    label: 'Moving Stock',
+                    backgroundColor: 'blue',
+                    yAxisID: 'y-axis-1',
+                    stack: 'Stack 0',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'bar',
+                    label: 'Dead Stock',
+                    backgroundColor: 'grey',
+                    yAxisID: 'y-axis-1',
+                    stack: 'Stack 0',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+                {
+                    type: 'bar',
+                    label: 'Daily Usage Average',
+                    backgroundColor: 'green',
+                    yAxisID: 'y-axis-1',
+                    stack: 'Stack 1',
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                }]
+        };
+        AvgInventKYChartData.labels.splice(0, AvgInventKYChartData.labels.length);
+        AvgInventKYChartData.datasets[0].data.splice(0, AvgInventKYChartData.datasets[0].data.length);
+        AvgInventKYChartData.datasets[1].data.splice(0, AvgInventKYChartData.datasets[1].data.length);
+        AvgInventKYChartData.datasets[2].data.splice(0, AvgInventKYChartData.datasets[2].data.length);
+        AvgInventKYChartData.datasets[3].data.splice(0, AvgInventKYChartData.datasets[3].data.length);
+        AvgInventKYChartData.datasets[4].data.splice(0, AvgInventKYChartData.datasets[4].data.length);
+        $("#btnRefreshDbAvgInventKY i").removeClass("fa-search");
+        $("#btnRefreshDbAvgInventKY i").addClass("fa-spinner fa-spin");
+        var FilterBusUnit = $('#FilterBUAvgInventKY option:selected').val();
+        var FilterYear = $('#FilterYearAvgInventKY option:selected').val();
+        $.getJSON("@(Url.Action("GetDataDashboardAvgInventory_KY"))", { FilterBusUnit: FilterBusUnit, FilterYear: FilterYear }, function (data) {
+            var i = 0;
+            $.each(data, function (key, val) {
+                AvgInventKYChartData.labels.splice(i, 1, val.periodmonth);
+                AvgInventKYChartData.datasets[0].data.splice(i, 1, val.ratio);
+                AvgInventKYChartData.datasets[1].data.splice(i, 1, val.ratiotarget);
+                AvgInventKYChartData.datasets[2].data.splice(i, 1, val.amount_active);
+                AvgInventKYChartData.datasets[3].data.splice(i, 1, val.amount_dead);
+                AvgInventKYChartData.datasets[4].data.splice(i, 1, val.amount_usg);
+                i++;
+            });
+            var AvgInventKYChart = new Chart(AvgInventKYCanvas, {
+                type: 'bar',
+                data: AvgInventKYChartData,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: false
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        }],
+                        yAxes: [{
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            id: 'y-axis-1',
+                            stacked: true
+                        }, {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            id: 'y-axis-2',
+                            gridLines: {
+                                drawOnChartArea: false
+                            }
+                        }],
+                    }
+                }
+            });
+            setTimeout(function () {
+                $("#btnRefreshDbAvgInventKY i").removeClass("fa-spinner fa-spin");
+                $("#btnRefreshDbAvgInventKY i").addClass("fa-search");
+            }, 100);
+        });
+    }
+
+    $(document).ready(function () {
+        ShowDashboardAvgInventRM();
+        ShowDashboardAvgInventKY();
+    });
+
+    $("#btnRefreshDbAvgInventRM").click(function () {
+        ShowDashboardAvgInventRM();
+    });
+
+    $("#btnRefreshDbAvgInventKY").click(function () {
+        ShowDashboardAvgInventKY();
+    });
+</script>

@@ -1,0 +1,113 @@
+﻿@{ 
+    
+    List<HRM.Models.RoleDetail> allmenus = new List<HRM.Models.RoleDetail>();
+    var url = Request.RawUrl;
+    if (Session["Role"] != null)
+    {
+        allmenus = (List<HRM.Models.RoleDetail>)Session["Role"];
+    }
+
+    List<string> moduls = new List<string>() { "SETUP"};
+    List<string> types = new List<string>() { "HIGHLIGHT", "REGULAR" };
+
+    string[] iconmodules = { "fa fa-wrench"/*, "fa fa-briefcase", "fa fa-shopping-cart", "fa fa-database", "fa fa-car", "fa fa-industry", "fa fa-balance-scale", "fa fa-cubes", "fa fa-clone"*/ };
+    string[] icontypes = { "fa fa-book", "fa fa-archive"/*, "fa fa-file", "fa fa-bar-chart"*/ };
+}
+
+<ul class="sidebar-menu" data-widget="tree">
+    <li class="header">MENU</li>
+    <li class="@((url.Contains("/Home"))?"active":"")">
+        <a href="~/Home/Index">
+            <i class="fa fa-bell"></i><span>NOTIFICATION</span>
+        </a>
+    </li>
+    @*<li class="@((url.Contains("/Dashboard"))?"active":"")">
+        <a href="~/Dashboard/Index">
+            <i class="fa fa-dashboard"></i><span>DASHBOARD</span>
+        </a>
+    </li>*@
+    @{
+        var ActControler = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString();
+        var isModulActive = "";
+        var isModulExists = "";
+        var isTypeActive = "";
+        var isTypeExists = "";
+        var isMenuActive = "";
+        var seq = 0;
+
+        foreach (var modul in moduls)
+        {
+            isModulActive = "";
+            isModulExists = "";
+            if (allmenus.Where(w => w.formmodule == modul).Count() > 0)
+            {
+                isModulExists = "Exists";
+                if (allmenus.Where(w => w.formmodule == modul && ActControler.ToLower() == w.formaddress.ToLower()).Count() > 0)
+                {
+                    isModulActive = "active";
+                }
+            }
+
+            if (isModulExists == "Exists")
+            {
+                @:
+                <li class="treeview @(isModulActive)">
+                    <a href="#">
+                        <i class="@(iconmodules[seq])"></i> <span>@(modul)</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @{
+                            foreach (var type in types)
+                            {
+                                isTypeActive = "";
+                                isTypeExists = "";
+                                if (allmenus.Where(w => w.formmodule == modul && w.formtype == type).Count() > 0)
+                                {
+                                    isTypeExists = "Exists";
+                                    if (allmenus.Where(w => w.formmodule == modul && w.formtype == type && ActControler.ToLower() == w.formaddress.ToLower()).Count() > 0)
+                                    {
+                                        isTypeActive = "active";
+                                    }
+                                }
+                                if (isTypeExists == "Exists")
+                                {
+                                    @:
+                                    <li class="treeview @(isTypeActive)">
+                                        <a href="#">
+                                            <i class="@(type.ToLower().Contains("high")?icontypes[0]:icontypes[1])"></i> <span>@(type)</span>
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            @{
+                                                foreach (var menu in allmenus.Where(w => w.formmodule == modul && w.formtype == type).OrderBy(o => o.formnumber))
+                                                {
+                                                    isMenuActive = "";
+                                                    if (ActControler.ToLower() == menu.formaddress.ToLower())
+                                                    {
+                                                        isMenuActive = "active";
+                                                    }
+                                                    @:
+                                                    <li class="@(isMenuActive)">
+                                                        <a href="@(Url.Action(menu.formmenu, menu.formaddress))">
+                                                            <i class="@(type.ToLower().Contains("high")?icontypes[0]:icontypes[1])"></i> @(menu.formname)
+                                                        </a>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </li>
+            }
+            seq++;
+        }
+    }
+</ul>

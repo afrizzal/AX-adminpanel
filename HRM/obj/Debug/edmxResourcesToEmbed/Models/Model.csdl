@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="HRMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BENEFITs" EntityType="HRMModel.BENEFIT" />
+    <EntitySet Name="Cities" EntityType="HRMModel.City" />
+    <EntitySet Name="Districts" EntityType="HRMModel.District" />
+    <EntitySet Name="FAQs" EntityType="HRMModel.FAQ" />
+    <EntitySet Name="HighlightKatalogues1" EntityType="HRMModel.HighlightKatalogues" />
+    <EntitySet Name="HighlightNews1" EntityType="HRMModel.HighlightNews" />
+    <EntitySet Name="HighlightPromotions" EntityType="HRMModel.HighlightPromotion" />
+    <EntitySet Name="HighlightStores" EntityType="HRMModel.HighlightStore" />
+    <EntitySet Name="Katalogues" EntityType="HRMModel.Katalogue" />
+    <EntitySet Name="Media1" EntityType="HRMModel.Media" />
+    <EntitySet Name="News" EntityType="HRMModel.News" />
+    <EntitySet Name="Promoes" EntityType="HRMModel.Promo" />
+    <EntitySet Name="Provinces" EntityType="HRMModel.Province" />
+    <EntitySet Name="Stores" EntityType="HRMModel.Store" />
+    <AssociationSet Name="FK_City_Province" Association="HRMModel.FK_City_Province">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="City" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_District_City" Association="HRMModel.FK_District_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="District" EntitySet="Districts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stores_City" Association="HRMModel.FK_Stores_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stores_District" Association="HRMModel.FK_Stores_District">
+      <End Role="District" EntitySet="Districts" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_News_HighlightNews" Association="HRMModel.FK_News_HighlightNews">
+      <End Role="HighlightNew" EntitySet="HighlightNews1" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Promo_HighlightPromotion" Association="HRMModel.FK_Promo_HighlightPromotion">
+      <End Role="HighlightPromotion" EntitySet="HighlightPromotions" />
+      <End Role="Promo" EntitySet="Promoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stores_Province" Association="HRMModel.FK_Stores_Province">
+      <End Role="Province" EntitySet="Provinces" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="STORE_HLPROMOTION" Association="HRMModel.STORE_HLPROMOTION">
+      <End Role="HighlightPromotion" EntitySet="HighlightPromotions" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="STORE_NEWS" Association="HRMModel.STORE_NEWS">
+      <End Role="News" EntitySet="News" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="STORE_PROMO" Association="HRMModel.STORE_PROMO">
+      <End Role="Promo" EntitySet="Promoes" />
+      <End Role="Store" EntitySet="Stores" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BENEFIT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ORDERNO" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_Province" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Province" Relationship="HRMModel.FK_City_Province" FromRole="City" ToRole="Province" />
+    <NavigationProperty Name="Districts" Relationship="HRMModel.FK_District_City" FromRole="City" ToRole="District" />
+    <NavigationProperty Name="Stores" Relationship="HRMModel.FK_Stores_City" FromRole="City" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="ID_City" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="HRMModel.FK_District_City" FromRole="District" ToRole="City" />
+    <NavigationProperty Name="Stores" Relationship="HRMModel.FK_Stores_District" FromRole="District" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="FAQ">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QUESTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ANSWER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="HighlightKatalogues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE_COVER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE_LOGO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="HighlightNews">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ISENABLE" Type="Boolean" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="News" Relationship="HRMModel.FK_News_HighlightNews" FromRole="HighlightNew" ToRole="News" />
+  </EntityType>
+  <EntityType Name="HighlightPromotion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CONTEN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Promoes" Relationship="HRMModel.FK_Promo_HighlightPromotion" FromRole="HighlightPromotion" ToRole="Promo" />
+    <NavigationProperty Name="Stores" Relationship="HRMModel.STORE_HLPROMOTION" FromRole="HighlightPromotion" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="HighlightStore">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IMAGE_COVER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE_LOGO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WORK_HOUR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="INSTAGRAM" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FACEBOOK" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="YOUTUBE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="WEBSITE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TOKOPEDIA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DEKORUMA" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Katalogue">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PDF_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MEDIA_ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="DATA_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="URL_IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HN" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CONTEN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="HighlightNews" Relationship="HRMModel.FK_News_HighlightNews" FromRole="News" ToRole="HighlightNew" />
+    <NavigationProperty Name="Stores" Relationship="HRMModel.STORE_NEWS" FromRole="News" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Promo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_HP" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SUBTITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CONTEN" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PRICE" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DISCOUNT_PRICE" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="DISCOUNT_PRICE_MEMBER" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="START_DATE" Type="DateTime" Precision="0" />
+    <Property Name="END_DATE" Type="DateTime" Precision="0" />
+    <Property Name="URL_IMAGE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="HighlightPromotion" Relationship="HRMModel.FK_Promo_HighlightPromotion" FromRole="Promo" ToRole="HighlightPromotion" />
+    <NavigationProperty Name="Stores" Relationship="HRMModel.STORE_PROMO" FromRole="Promo" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Cities" Relationship="HRMModel.FK_City_Province" FromRole="Province" ToRole="City" />
+    <NavigationProperty Name="Stores" Relationship="HRMModel.FK_Stores_Province" FromRole="Province" ToRole="Store" />
+  </EntityType>
+  <EntityType Name="Store">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NAME" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="PHONE" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="WHATSAPP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WORK_HOUR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GOOGLE_ADDRESS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LATITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LOGITUDE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IMAGE_URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="STREET" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ID_PROVINCE" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ID_CITY" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ID_DISTRICT" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="ZIPCODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="FASILITAS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CREATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UPDATED_AT" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="City" Relationship="HRMModel.FK_Stores_City" FromRole="Store" ToRole="City" />
+    <NavigationProperty Name="District" Relationship="HRMModel.FK_Stores_District" FromRole="Store" ToRole="District" />
+    <NavigationProperty Name="Province" Relationship="HRMModel.FK_Stores_Province" FromRole="Store" ToRole="Province" />
+    <NavigationProperty Name="HighlightPromotions" Relationship="HRMModel.STORE_HLPROMOTION" FromRole="Store" ToRole="HighlightPromotion" />
+    <NavigationProperty Name="News" Relationship="HRMModel.STORE_NEWS" FromRole="Store" ToRole="News" />
+    <NavigationProperty Name="Promoes" Relationship="HRMModel.STORE_PROMO" FromRole="Store" ToRole="Promo" />
+  </EntityType>
+  <Association Name="FK_City_Province">
+    <End Type="HRMModel.Province" Role="Province" Multiplicity="1" />
+    <End Type="HRMModel.City" Role="City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="ID_Province" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_District_City">
+    <End Type="HRMModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="HRMModel.District" Role="District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="ID_City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stores_City">
+    <End Type="HRMModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="HRMModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="ID_CITY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stores_District">
+    <End Type="HRMModel.District" Role="District" Multiplicity="0..1" />
+    <End Type="HRMModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="ID_DISTRICT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_News_HighlightNews">
+    <End Type="HRMModel.HighlightNews" Role="HighlightNew" Multiplicity="0..1" />
+    <End Type="HRMModel.News" Role="News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HighlightNew">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="ID_HN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Promo_HighlightPromotion">
+    <End Type="HRMModel.HighlightPromotion" Role="HighlightPromotion" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="HRMModel.Promo" Role="Promo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HighlightPromotion">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Promo">
+        <PropertyRef Name="ID_HP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stores_Province">
+    <End Type="HRMModel.Province" Role="Province" Multiplicity="0..1" />
+    <End Type="HRMModel.Store" Role="Store" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Store">
+        <PropertyRef Name="ID_PROVINCE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="STORE_HLPROMOTION">
+    <End Type="HRMModel.HighlightPromotion" Role="HighlightPromotion" Multiplicity="*" />
+    <End Type="HRMModel.Store" Role="Store" Multiplicity="*" />
+  </Association>
+  <Association Name="STORE_NEWS">
+    <End Type="HRMModel.News" Role="News" Multiplicity="*" />
+    <End Type="HRMModel.Store" Role="Store" Multiplicity="*" />
+  </Association>
+  <Association Name="STORE_PROMO">
+    <End Type="HRMModel.Promo" Role="Promo" Multiplicity="*" />
+    <End Type="HRMModel.Store" Role="Store" Multiplicity="*" />
+  </Association>
+</Schema>

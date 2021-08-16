@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Notification
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-6" id="divnotiflistapp" style="display:none">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Following transactions are waiting for your approval</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <ul class="nav nav-pills nav-stacked" id="notiflistapp"></ul>
+                </div>
+                <div class="box-footer text-center bg-"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="divnotiflistprnonpo" style="display:none">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Following PR are waiting for PO</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <table id="dtnotifprnonpo" class="table table-striped" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Business Unit</th>
+                                <th>PR No.</th>
+                                <th>Department</th>
+                                <th>Note</th>
+                                <th>Outstanding</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="box-footer text-center bg-"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetNotifPRNonPO();
+    })
+
+    function GetNotifPRNonPO() {
+        $.ajax({
+            url: "@(Url.Action("GetNotifPRNonPO"))",
+            data: { },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                if (data.result == "") {
+                    var total = SetDataToTableNotification('#dtnotifprnonpo', 1, data);
+                    if (total > 0)
+                        $("#divnotiflistprnonpo").show();
+                    else
+                        $("#divnotiflistprnonpo").hide();
+                } else {
+                    $("#divnotiflistprnonpo").hide();
+                }
+            },
+            error: function (err) {
+                swal('', err.responseText, 'error');
+                $("#divnotiflistprnonpo").hide();
+            }
+        });
+    }
+
+    function SetNotification(data) {
+        if (data != null) {
+            var listnotifapp = "";
+            var totalapp = 0;
+
+            $.each(data, function (key, val) {
+                if (val.notiftype == "Approval") {
+                    listnotifapp += '<li><a href="' + val.notiflink + '">' + val.notiftitle + '<span class="pull-right badge bg-' + (val.notifqty <= 5 ? "green" : (val.notifqty <= 20 ? "orange" : "red")) + '">' + val.notifqty + '</span></a></li>';
+                    totalapp += val.notifqty;
+                }
+            });
+
+            if (totalapp <= 0) {
+                $("#divnotiflistapp").hide();
+            } else {
+                $("#divnotiflistapp").show();
+            }
+            $("#notiflistapp").html(listnotifapp);
+        }
+    }
+</script>

@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>List Of Profile</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <p>
+                        @Html.ActionLink("Create New", "Form", null, new { @class = "btn btn-primary btn-outline btn-sm" })
+                    </p>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12" style="overflow-x: auto;">
+                            <table id="dtlistapp" class="table table-striped" style="width: 100%;">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: "@(Url.Action("GetDataList"))",
+            data: { },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var cols = [];
+                var rows = [];
+
+                if (data.msg == "") {
+                    var hidecols = [0];
+                    $.each(data.colname, function (key, val) {
+                        var obj = {
+                            title: val
+                        }
+                        cols.push(obj);
+                    });
+
+                    $.each(data.rows, function (key, val) {
+                        var row = Object.values(val);
+                        rows.push(row);
+                    });
+
+                    $('#dtlistapp').dataTable({
+                        "columns": cols,
+                        "data": rows,
+                        "deferRender": true,
+                        "columnDefs": [
+                            { "targets": hidecols, "visible": false, "searchable": false }
+                        ]
+                    });
+                }
+                else
+                {
+                    swal('', data.msg, 'info');
+                }
+            },
+            error: function (err) {
+                swal('', err, 'error');
+            }
+        });
+    });
+</script>

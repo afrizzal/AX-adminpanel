@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QL_FISModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BENEFIT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ORDERNO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="DESCRIPTION" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Province" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="NAME" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="District">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ID_City" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="NAME" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="FAQ">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QUESTION" Type="varchar(max)" />
+    <Property Name="ANSWER" Type="varchar(max)" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HighlightKatalogues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="IMAGE_COVER" Type="varchar(max)" />
+    <Property Name="IMAGE_LOGO" Type="varchar(max)" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HighlightNews">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="IMAGE" Type="varchar(max)" />
+    <Property Name="ISENABLE" Type="bit" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HighlightPromotion">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="IMAGE" Type="varchar" MaxLength="250" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="CONTEN" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="HighlightStore">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IMAGE_COVER" Type="varchar(max)" />
+    <Property Name="IMAGE_LOGO" Type="varchar(max)" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+    <Property Name="WORK_HOUR" Type="varchar" MaxLength="50" />
+    <Property Name="INSTAGRAM" Type="varchar(max)" />
+    <Property Name="FACEBOOK" Type="varchar(max)" />
+    <Property Name="YOUTUBE" Type="varchar(max)" />
+    <Property Name="WEBSITE" Type="varchar(max)" />
+    <Property Name="TOKOPEDIA" Type="varchar(max)" />
+    <Property Name="DEKORUMA" Type="varchar(max)" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Katalogues">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="PDF_URL" Type="varchar(max)" />
+    <Property Name="IMAGE_URL" Type="varchar(max)" />
+    <Property Name="CREATED_AT" Type="datetime" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MEDIA_ID" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="DATA_TYPE" Type="varchar" MaxLength="50" />
+    <Property Name="URL_IMAGE" Type="varchar" MaxLength="250" />
+    <Property Name="CREATED_AT" Type="datetime" />
+    <Property Name="UPDATED_AT" Type="datetime" />
+  </EntityType>
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_HN" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="CONTEN" Type="varchar(max)" />
+    <Property Name="IMAGE" Type="varchar(max)" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Promo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_HP" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="TITLE" Type="varchar(max)" />
+    <Property Name="SUBTITLE" Type="varchar(max)" />
+    <Property Name="CONTEN" Type="varchar(max)" />
+    <Property Name="PRICE" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DISCOUNT_PRICE" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="DISCOUNT_PRICE_MEMBER" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="START_DATE" Type="date" />
+    <Property Name="END_DATE" Type="date" />
+    <Property Name="URL_IMAGE" Type="varchar" MaxLength="250" />
+    <Property Name="CREATED_AT" Type="datetime" />
+    <Property Name="UPDATED_AT" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Province">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="decimal" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="varchar(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ItyAndroidCustDb.dbo.STORE_HLPROMOTION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="STORE_HLPROMOTION">
+    <Key>
+      <PropertyRef Name="ID_HP" />
+      <PropertyRef Name="ID_S" />
+    </Key>
+    <Property Name="ID_HP" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ID_S" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ItyAndroidCustDb.dbo.STORE_NEWS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="STORE_NEWS">
+    <Key>
+      <PropertyRef Name="ID_S" />
+      <PropertyRef Name="ID_N" />
+    </Key>
+    <Property Name="ID_S" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ID_N" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ItyAndroidCustDb.dbo.STORE_PROMO' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="STORE_PROMO">
+    <Key>
+      <PropertyRef Name="ID_P" />
+      <PropertyRef Name="ID_S" />
+    </Key>
+    <Property Name="ID_P" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="ID_S" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stores">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="varchar" MaxLength="250" />
+    <Property Name="PHONE" Type="varchar" MaxLength="25" />
+    <Property Name="WHATSAPP" Type="varchar" MaxLength="50" />
+    <Property Name="WORK_HOUR" Type="varchar" MaxLength="50" />
+    <Property Name="GOOGLE_ADDRESS" Type="varchar" MaxLength="50" />
+    <Property Name="LATITUDE" Type="varchar" MaxLength="50" />
+    <Property Name="LOGITUDE" Type="varchar" MaxLength="50" />
+    <Property Name="IMAGE_URL" Type="varchar(max)" />
+    <Property Name="STREET" Type="varchar(max)" />
+    <Property Name="ID_PROVINCE" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ID_CITY" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ID_DISTRICT" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ZIPCODE" Type="varchar" MaxLength="20" />
+    <Property Name="FASILITAS" Type="varchar(max)" />
+    <Property Name="CREATED_AT" Type="datetime" Nullable="false" />
+    <Property Name="UPDATED_AT" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_City_Province">
+    <End Role="Province" Type="Self.Province" Multiplicity="1" />
+    <End Role="City" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="City">
+        <PropertyRef Name="ID_Province" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_District_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="District" Type="Self.District" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="District">
+        <PropertyRef Name="ID_City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_News_HighlightNews">
+    <End Role="HighlightNews" Type="Self.HighlightNews" Multiplicity="0..1" />
+    <End Role="News" Type="Self.News" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HighlightNews">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="News">
+        <PropertyRef Name="ID_HN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Promo_HighlightPromotion">
+    <End Role="HighlightPromotion" Type="Self.HighlightPromotion" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Promo" Type="Self.Promo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HighlightPromotion">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Promo">
+        <PropertyRef Name="ID_HP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STORE_HLPROMOTION_HighlightPromotion">
+    <End Role="HighlightPromotion" Type="Self.HighlightPromotion" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STORE_HLPROMOTION" Type="Self.STORE_HLPROMOTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HighlightPromotion">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STORE_HLPROMOTION">
+        <PropertyRef Name="ID_HP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STORE_NEWS_News">
+    <End Role="News" Type="Self.News" Multiplicity="1" />
+    <End Role="STORE_NEWS" Type="Self.STORE_NEWS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="News">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STORE_NEWS">
+        <PropertyRef Name="ID_N" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STORE_NEWS_Stores">
+    <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+    <End Role="STORE_NEWS" Type="Self.STORE_NEWS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stores">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STORE_NEWS">
+        <PropertyRef Name="ID_S" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STORE_PROMO_Promo">
+    <End Role="Promo" Type="Self.Promo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="STORE_PROMO" Type="Self.STORE_PROMO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promo">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STORE_PROMO">
+        <PropertyRef Name="ID_P" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STORE_PROMO_Stores">
+    <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+    <End Role="STORE_PROMO" Type="Self.STORE_PROMO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stores">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STORE_PROMO">
+        <PropertyRef Name="ID_S" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_STORE_PROMOTION_Stores">
+    <End Role="Stores" Type="Self.Stores" Multiplicity="1" />
+    <End Role="STORE_HLPROMOTION" Type="Self.STORE_HLPROMOTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stores">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="STORE_HLPROMOTION">
+        <PropertyRef Name="ID_S" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stores_City">
+    <End Role="City" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Stores">
+        <PropertyRef Name="ID_CITY" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stores_District">
+    <End Role="District" Type="Self.District" Multiplicity="0..1" />
+    <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="District">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Stores">
+        <PropertyRef Name="ID_DISTRICT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Stores_Province">
+    <End Role="Province" Type="Self.Province" Multiplicity="0..1" />
+    <End Role="Stores" Type="Self.Stores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Province">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Stores">
+        <PropertyRef Name="ID_PROVINCE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QL_FISModelStoreContainer">
+    <EntitySet Name="BENEFIT" EntityType="Self.BENEFIT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FAQ" EntityType="Self.FAQ" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HighlightKatalogues" EntityType="Self.HighlightKatalogues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HighlightNews" EntityType="Self.HighlightNews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HighlightPromotion" EntityType="Self.HighlightPromotion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HighlightStore" EntityType="Self.HighlightStore" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Katalogues" EntityType="Self.Katalogues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Media" EntityType="Self.Media" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Promo" EntityType="Self.Promo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Province" EntityType="Self.Province" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stores" EntityType="Self.Stores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="STORE_HLPROMOTION" EntityType="Self.STORE_HLPROMOTION" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [STORE_HLPROMOTION].[ID_HP] AS [ID_HP], 
+    [STORE_HLPROMOTION].[ID_S] AS [ID_S]
+    FROM [dbo].[STORE_HLPROMOTION] AS [STORE_HLPROMOTION]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="STORE_NEWS" EntityType="Self.STORE_NEWS" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [STORE_NEWS].[ID_S] AS [ID_S], 
+    [STORE_NEWS].[ID_N] AS [ID_N]
+    FROM [dbo].[STORE_NEWS] AS [STORE_NEWS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="STORE_PROMO" EntityType="Self.STORE_PROMO" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [STORE_PROMO].[ID_P] AS [ID_P], 
+    [STORE_PROMO].[ID_S] AS [ID_S]
+    FROM [dbo].[STORE_PROMO] AS [STORE_PROMO]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_City_Province" Association="Self.FK_City_Province">
+      <End Role="Province" EntitySet="Province" />
+      <End Role="City" EntitySet="City" />
+    </AssociationSet>
+    <AssociationSet Name="FK_District_City" Association="Self.FK_District_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="District" EntitySet="District" />
+    </AssociationSet>
+    <AssociationSet Name="FK_News_HighlightNews" Association="Self.FK_News_HighlightNews">
+      <End Role="HighlightNews" EntitySet="HighlightNews" />
+      <End Role="News" EntitySet="News" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Promo_HighlightPromotion" Association="Self.FK_Promo_HighlightPromotion">
+      <End Role="HighlightPromotion" EntitySet="HighlightPromotion" />
+      <End Role="Promo" EntitySet="Promo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STORE_HLPROMOTION_HighlightPromotion" Association="Self.FK_STORE_HLPROMOTION_HighlightPromotion">
+      <End Role="HighlightPromotion" EntitySet="HighlightPromotion" />
+      <End Role="STORE_HLPROMOTION" EntitySet="STORE_HLPROMOTION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STORE_NEWS_News" Association="Self.FK_STORE_NEWS_News">
+      <End Role="News" EntitySet="News" />
+      <End Role="STORE_NEWS" EntitySet="STORE_NEWS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STORE_NEWS_Stores" Association="Self.FK_STORE_NEWS_Stores">
+      <End Role="Stores" EntitySet="Stores" />
+      <End Role="STORE_NEWS" EntitySet="STORE_NEWS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STORE_PROMO_Promo" Association="Self.FK_STORE_PROMO_Promo">
+      <End Role="Promo" EntitySet="Promo" />
+      <End Role="STORE_PROMO" EntitySet="STORE_PROMO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STORE_PROMO_Stores" Association="Self.FK_STORE_PROMO_Stores">
+      <End Role="Stores" EntitySet="Stores" />
+      <End Role="STORE_PROMO" EntitySet="STORE_PROMO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_STORE_PROMOTION_Stores" Association="Self.FK_STORE_PROMOTION_Stores">
+      <End Role="Stores" EntitySet="Stores" />
+      <End Role="STORE_HLPROMOTION" EntitySet="STORE_HLPROMOTION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stores_City" Association="Self.FK_Stores_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="Stores" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stores_District" Association="Self.FK_Stores_District">
+      <End Role="District" EntitySet="District" />
+      <End Role="Stores" EntitySet="Stores" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Stores_Province" Association="Self.FK_Stores_Province">
+      <End Role="Province" EntitySet="Province" />
+      <End Role="Stores" EntitySet="Stores" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

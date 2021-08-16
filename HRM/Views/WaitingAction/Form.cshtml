@@ -1,0 +1,370 @@
+﻿@model HRM.Controllers.WaitingActionController.waitactmodel
+
+@{
+    ViewBag.Title = "Waiting for Approval";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>Approval @ViewBag.TransName</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.mstoid)
+                    @Html.HiddenFor(model => model.cmpcode)
+                    @Html.HiddenFor(model => model.tblname)
+                    @Html.Hidden("action")
+                    @Html.Hidden("transname")
+                    // TABLE HEADER SECTION
+                    <div class="box-header">
+                        <h3 class="box-title"><b><u>@ViewBag.BusinessUnit</u></b></h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6" style="overflow-x: auto;">
+                                <table id="dtapphdr" class="table-striped table-bordered" style="width: 100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-header">
+                        <h5><b><u>@ViewBag.TransName Detail Data</u></b></h5>
+                    </div>
+
+                    // LABEL INFO SECTION
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <b><span class="text-danger" id="appinfo"></span></b>
+                            </div>
+                        </div>
+                        @*UPDATE PRICE BUTTON*@
+                        <div class="row" id="viewbtnupdate" style="display: none;">
+                            <div class="col-md-6">
+                                <label class="col-md-4 control-label">Update Price</label>
+                                <div class="input-group">
+                                    <div class="col-md-6">
+                                        @Html.Editor("price", new { htmlAttributes = new { @class = "form-control money", @type = "text", @maxlength = "10" } })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-success btn-md" id="btnUpdatePrice"><b>Update</b></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    // TABLE DETAIL SECTION
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12" style="overflow-x: auto;">
+                                <b><span id="totalrows"></span></b>
+                                <table id="dtappdtl" class="table table-striped table-bordered" style="width: 100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+
+                    // TABLE FOOTER SECTION
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-4" style="overflow-x: auto;">
+                                <table id="dtappftr" class="table-striped table-bordered" style="width: 100%;"></table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    // BUTTON ACTION SECTION
+                    <div class="box-footer">
+                        <div class="pull-right">
+                            <button type="submit" id="btnSubmit" style="display: none;">Submit</button>
+                            <button type="button" class="btn btn-success btn-md" id="btnApprove" onclick="ApprovalAction('Approve')"><b>Approve</b></button>
+                            <button type="button" class="btn btn-primary btn-md" id="btnRevise" onclick="ApprovalAction('Revise')"><b>Revise</b></button>
+                            <button type="button" class="btn btn-danger btn-md" id="btnReject" onclick="ApprovalAction('Reject')"><b>Reject</b></button>
+                            <a href="@Url.Action("Index/" + Model.tblname)" type="button" class="btn btn-default btn-md"><b>Back</b></a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        var id = $('#mstoid').val();
+        var cmp = $('#cmpcode').val();
+        var tblname = $('#tblname').val();
+
+        $.ajax({
+            url: "@(Url.Action("GetDataApproval"))",
+            data: { id: id, cmp: cmp, tblname: tblname },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var rowshdr = [];
+                var colsdtl = [];
+                var rowsdtl = [];
+                var rowsftr = [];
+
+                if (data.msg == "") {
+                    // Set Data for Header
+                    $.each(data.rowshdr, function (key, val) {
+                        var row = Object.values(val);
+                        rowshdr.push(row);
+                    });
+                    $('#dtapphdr').dataTable({
+                        "data": rowshdr,
+                        "ordering": false,
+                        "searching": false,
+                        "paging": false,
+                        "info": false,
+                        "autoWidth": false,
+                        "columnDefs": [
+                            { className: "text-bold col-md-4", "targets": [0] },
+                            { className: "col-md-8", "targets": [1] }
+                        ],
+                        "drawCallback": function (settings) {
+                            $("#dtapphdr thead").hide();
+                        }
+                    });
+
+                    // Set Data for Information
+                    $('#appinfo').html(data.info);
+
+                    // Set Data for Detail
+                    $.each(data.colsdtl, function (key, val) {
+                        var obj = {
+                            title: val
+                        }
+                        colsdtl.push(obj);
+                    });
+                    var i = 0;
+                    if (tblname == 'ql_trntransmst') {
+                        $.each(data.rowsdtl, function (key, val) {
+                            var Price = val.Price_IDR_Per_Unit.toString().replace(',', '');
+                            rowsdtl.push([
+                                val.No,
+                                val.Type,
+                                val.Code,
+                                val.Description,
+                                val.Qty,
+                                val.Stock_Qty,
+                                val.Unit,
+                                val.From_Warehouse,
+                                val.To_Warehouse,
+                                val.Value_IDR_Per_Unit,
+                                val.Value_USD_Per_Unit,
+                                '<input type="text" class="form-control money" style="width: 80px" id="stockvalue-' + val.No + '" name="stockvalue-' + val.No + '" value="' + Price + '">',
+                                val.Detail_Note
+                            ]);
+                            i++;
+                        });
+                    } else if (tblname == 'ql_trnstockadj'){
+                        $.each(data.rowsdtl, function (key, val) {
+                            var Price = val.Value.toString().replace(',', '');
+                            rowsdtl.push([
+                            val.No,
+                            val.Mat_Code,
+                            val.Mat_Desc,
+                            val.Location,
+                            val.Current_Qty,
+                            val.Adj_Qty,
+                            val.New_Qty,
+                            val.Unit,
+                            '<input type="text" class="form-control money" style="width: 80px" id="stockvalue-' + val.No + '" name="stockvalue-' + val.No + '" value="' + Price + '">',
+                            val.Detail_Note
+                            ]);
+                            i++;
+                        });
+                    } else {
+                        $.each(data.rowsdtl, function (key, val) {
+                            var row = Object.values(val);
+                            rowsdtl.push(row);
+                            i++;
+                        });
+                    }
+
+                    $('#totalrows').html('Total Rows : ' + i.toString());
+
+                    var tblDtl = $('#dtappdtl').dataTable({
+                        "columns": colsdtl,
+                        "data": rowsdtl,
+                        "ordering": false,
+                        "searching": false,
+                        "paging": false,
+                        "info": false,
+                        "autoWidth": false,
+                        "drawCallback": function (settings) {
+                            $("#dtappdtl .money").inputmask('decimal', {
+                                autoGroup: true,
+                                groupSeparator: ",",
+                                removeMaskOnSubmit: true,
+                                autoUnmask: true
+                            });
+                        }
+                    });
+
+                    // Set Data for Footer
+                    $.each(data.rowsftr, function (key, val) {
+                        var row = Object.values(val);
+                        rowsftr.push(row);
+                    });
+                    if (rowsftr.length > 0)
+                    {
+                        $('#dtappftr').dataTable({
+                            "data": rowsftr,
+                            "ordering": false,
+                            "searching": false,
+                            "paging": false,
+                            "info": false,
+                            "autoWidth": false,
+                            "columnDefs": [
+                                { className: "text-bold col-md-4", "targets": [0] },
+                                { className: "text-right col-md-8", "targets": [1] }
+                            ],
+                            "drawCallback": function (settings) {
+                                $("#dtappftr thead").hide();
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    swal('', data.msg, 'info');
+                }
+            },
+            error: function (err) {
+                swal('', err.responseText, 'error');
+            }
+        });
+
+        if (tblname == "ql_trntransmst")
+            $('#viewbtnupdate').show();
+        else
+            $('#viewbtnupdate').hide();
+    });
+
+    $('#btnUpdatePrice').click(function () {
+        var price = $('#price').val();
+        var tbldtl = $('#dtappdtl').DataTable();
+        for (var i = 0 ; i < tbldtl.rows().data().length; i++) {
+            var row = tbldtl.row(i).data();
+            row[11] = '<input type="text" class="form-control money" style="max-width: 80px" id="stockvalue-' + (i + 1) + '" value="' + price + '">';
+            tbldtl.row(i).data(row).invalidate();
+        }
+        tbldtl.rows().data().draw();
+    })
+
+    function SetDataDtl() {
+        var table = $('#dtappdtl').DataTable();
+        var dataDtl = table.rows().data();
+        var tblname = $('#tblname').val();
+        var rows = [];
+        for (var i = 0 ; i < dataDtl.length; i++) {
+            var stockadjoid = dataDtl[i][0];
+            var stockvalue_id = "#stockvalue-" + (i + 1);
+            var stockvalue = table.$(stockvalue_id).val();
+            if (tblname == 'ql_trntransmst') {
+                var obj = {
+                    transdtloid: stockadjoid,
+                    transprice: stockvalue
+                }
+            } else if (tblname == 'ql_trnstockadj') {
+                var obj = {
+                    stockadjoid: stockadjoid,
+                    stockvalue: stockvalue,
+                }
+            }
+            rows.push(obj);
+        }
+        if (tblname == 'ql_trntransmst') {
+            $.ajax({
+                type: 'POST',
+                url: "@(Url.Action("SetDataMatTransDetails"))",
+                data: JSON.stringify({ dtDtl: rows }),
+                dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                processData: false
+        });
+        } else if (tblname == 'ql_trnstockadj') {
+            $.ajax({
+                type: 'POST',
+                url: "@(Url.Action("SetDataDetails"))",
+                data: JSON.stringify({ dtDtl: rows }),
+                dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                processData: false
+        });
+        }
+    }
+
+    function ApprovalAction(action) {
+        var tblname = $('#tblname').val();
+        if (tblname == 'ql_trnstockadj' || tblname == 'ql_trntransmst') {
+            SetDataDtl();
+        }
+        $("#action").val(action + (action == "Reject" ? "e" : "") + "d");
+        $("#transname").val("@ViewBag.TransName");
+
+        var tbl = {
+            "mstoid": $('#mstoid').val(),
+            "cmpcode": $('#cmpcode').val(),
+            "tblname": $('#tblname').val()
+        };
+        var action_ed = $('#action').val();
+        var transname = $('#transname').val();
+
+        var token = $('input[name="__RequestVerificationToken"]').val();
+        Swal({
+            title: 'Are you sure to ' + action.toUpperCase() + ' this data?',
+            text: "",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes, ' + action + ' this data!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("Form"))",
+                    data: { __RequestVerificationToken: token, tbl: tbl, action: action_ed, transname: transname },
+                    success: function (data) {
+                        if (data.error == '') {
+                            var sMsg = "Data has been " + action_ed.toLowerCase() + "!<br />";
+                            sMsg += data.sInfo;
+                            Swal({
+                                title: 'Data ' + action_ed + '!',
+                                html: sMsg,
+                                type: 'success',
+                                allowOutsideClick: false
+                            }).then(function () {
+                                location.replace("@(Url.Action("Index"))/" + tbl["tblname"]);
+                            });
+                            @*Swal('Data ' + action_ed + '!', sMsg, 'success')
+                            setTimeout(function () {
+                                location.replace("@(Url.Action("Index"))/" + tbl["tblname"]);
+                            }, 1000);*@
+                        } else {
+                            Swal('' + action + ' data failed!', data.error, 'error')
+                        }
+                    },
+                    error: function (error) {
+                        Swal('' + action + ' data failed!', error.responseText, 'error')
+                    }
+                });
+            }
+        });
+    }
+</script>

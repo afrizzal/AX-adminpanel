@@ -1,0 +1,71 @@
+﻿@model HRM.Models.DataLogin
+
+@{
+    Layout = null;
+    Session.Clear();
+    string CompanyName = System.Configuration.ConfigurationManager.AppSettings["CompanyName"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login | @(CompanyName)</title>
+    <link rel="icon" type="image/x-icon" href="~/Images/CIS.ico" />
+    @*<link rel="icon" type="image/png" href="~/Images/Integra-logo.png" />*@
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/style-login.css">
+</head>
+
+<body>
+    <div class="wrapper color">
+        <div class="wrap max-960">
+            <div class="card card-all">
+                <div class="card-heading">
+                    @*<div class="card-box-logo">
+                        <div>
+                            <center><img src="~/Images/box-logo.png" class="lg-logo"></center>
+                        </div>
+                    </div>*@
+                    <div class="card-body">
+                        <div class="title">
+                            <center><img src="~/Images/image-logo.png" class="mini-logo"></center>
+                            <h4 style="text-align:center;">LOGIN</h4>
+                        </div>
+                        <section id="loginForm">
+                            @using (Html.BeginForm("Login", "Profile", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @style = "text-align: center;", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="row-space">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.userid, new { @class = "input input-style-2", @placeholder = "User ID", @autofocus = true, @required = "" })
+                                        @Html.ValidationMessageFor(m => m.userid, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="input-group">
+                                        @Html.PasswordFor(m => m.userpwd, new { @class = "input input-style-2", @placeholder = "Password", @required = "" })
+                                        @Html.ValidationMessageFor(m => m.userpwd, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <button type="submit">Login</button>
+                            }
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/tilt.jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+
+</html>

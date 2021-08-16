@@ -1,0 +1,147 @@
+﻿@model HRM.Models.QL_mstprof
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>Update Profile</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary form-horizontal">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="box-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.cmpcode)
+                        @Html.HiddenFor(model => model.profapplimit)
+                        @Html.HiddenFor(model => model.activeflag)
+                        @Html.HiddenFor(model => model.createuser)
+                        @Html.HiddenFor(model => model.createtime)
+                        @Html.HiddenFor(model => model.personoid)
+                        @Html.HiddenFor(model => model.profnote)
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">User ID</label>
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.profoid, new { htmlAttributes = new { @class = "form-control", @type = "text", @readonly = "" } })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">User Name <label class="text-red">*</label></label>
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.profname, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "", @maxlength = "50" } })
+                                            @Html.ValidationMessageFor(model => model.profname, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <input type="checkbox" id="cbPassword" checked="checked" onclick="ViewDivPassword()" />
+                                                <label class="control-label">Edit Password</label>
+                                                @Html.Hidden("cbpasswordvalue")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="divPassword">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Old Password <label class="text-red">*</label></label>
+                                        <div class="col-md-5">
+                                            @Html.EditorFor(model => model.profpass, new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "20" } })
+                                            @Html.ValidationMessageFor(model => model.profpass, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">New Password <label class="text-red">*</label></label>
+                                        <div class="col-md-5">
+                                            @Html.Editor("newprofpass", new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "20" } })
+                                            @Html.ValidationMessage("newprofpass", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Confirm New Password <label class="text-red">*</label></label>
+                                        <div class="col-md-5">
+                                            @Html.Editor("confirmprofpass", new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "20" } })
+                                            @Html.ValidationMessage("confirmprofpass", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <input type="checkbox" id="cbEmail" checked="checked" onclick="ViewDivEmail()" />
+                                                <label class="control-label">Edit Email</label>
+                                                @Html.Hidden("cbemailvalue")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="divEmail">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Email Address <label class="text-red">*</label></label>
+                                        <div class="col-md-5">
+                                            @Html.Editor("profemail", new { htmlAttributes = new { @class = "form-control", @type = "text", @maxlength = "50" } })
+                                            @Html.ValidationMessage("profemail", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-success btn-md" id="btnSave"><b>Save</b></button>
+                        <a href="@Url.Action("Index", "Home")" type="button" class="btn btn-default btn-md"><b>Cancel</b></a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+    function ViewDivPassword() {
+        var ischecked = $('#cbPassword').prop('checked');
+        $('#cbpasswordvalue').val(ischecked);
+        if (ischecked)
+            $('#divPassword').show();
+        else
+            $('#divPassword').hide();
+    }
+
+    function ViewDivEmail() {
+        var ischecked = $('#cbEmail').prop('checked');
+        $('#cbemailvalue').val(ischecked);
+        if (ischecked)
+            $('#divEmail').show();
+        else
+            $('#divEmail').hide();
+    }
+</script>

@@ -1,0 +1,98 @@
+﻿<div class="box-body">
+    <div class="row">
+        <div class="col-md-12">
+            <p>Show Data : @Html.ActionLink("In Process/Revise", "PrintOut", new { filter = "1" }, new { @class = "btn btn-success btn-outline btn-sm" }) | @Html.ActionLink("In Approval", "PrintOut", new { filter = "2" }, new { @class = "btn btn-warning btn-outline btn-sm" }) | @Html.ActionLink("Approved/Post", "PrintOut", new { filter = "3" }, new { @class = "btn btn-danger btn-outline btn-sm" })</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="divadvfilter" class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Advanced Filter</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @using (Html.BeginForm("PrintOut", null))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("filter")
+                        <div class="row small">
+                            <div class="form-group-sm">
+                                <label class="col-md-2 control-label">Filter</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("filterddl", null, new { @class = "form-control select2" })
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.Editor("filtertext", new { htmlAttributes = new { @class = "form-control", @type = "text" } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"><div class="col-md-12"></div></div>
+                        <div class="row small">
+                            <div class="form-group-sm">
+                                <label class="col-md-2 control-label">@Html.CheckBox("isperiodchecked") Period</label>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        @Html.Editor("filterperiodfrom", new { htmlAttributes = new { @class = "form-control datepicker datemask2", @type = "text" } })<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        @Html.Editor("filterperiodto", new { htmlAttributes = new { @class = "form-control datepicker datemask2", @type = "text" } })<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"><div class="col-md-12"></div></div>
+                        <div class="row small">
+                            <div class="form-group-sm">
+                                <label class="col-md-2 control-label">Status</label>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("filterstatus", null, new { @class = "form-control select2" })
+                                </div>
+                                <div class="col-md-4">
+                                    <button id="btnFind" type="submit" class="btn btn-warning btn-sm"><b>F i n d</b></button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+        var divadvfilter = document.getElementById("divadvfilter");
+        divadvfilter.classList.add("collapsed-box");
+        if ($('#isCollapse').val() == "False")
+            divadvfilter.classList.remove("collapsed-box");
+    });
+
+    $("#btnFind").click(function () {
+        var periodfrom = $('#filterperiodfrom').val();
+        var periodto = $('#filterperiodto').val();
+        var sMsg = "";
+
+        if (periodfrom == "")
+            sMsg = "Please fill Period From!";
+        if (sMsg == "" && periodto == "")
+            sMsg = "Please fill Period To!";
+        if (sMsg == "" && Date.parse(periodfrom) > Date.parse(periodto))
+            sMsg = "Period From must be less than Period To!";
+
+        if (sMsg != "") {
+            swal('Warning', sMsg, 'warning');
+            return false;
+        }
+
+        $('#filter').val('POST');
+    });
+</script>

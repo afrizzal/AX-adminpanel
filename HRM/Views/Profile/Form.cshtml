@@ -1,0 +1,541 @@
+﻿@model HRM.Models.QL_mstprof
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>Form Profile</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary form-horizontal">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    // BAGIAN HEADER
+                    <div class="box-header">
+                        <h3 class="box-title"><b>Profile Header</b></h3>
+                    </div>
+                    <div class="box-body">
+                        @{string UserID = ((Session["UserID"] == null) ? "-" : Session["UserID"].ToString());
+                        }
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.profapprovallimit)
+                        @Html.HiddenFor(model => model.createuser)
+                        @Html.Hidden("action")
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label text-red">@(ViewBag.action)</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Business Unit <label class="text-red">*</label></label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.cmpcode, null, new { @class = "form-control select2", @onchange = "ChangeBusinessUnit()" })
+                                            @Html.ValidationMessageFor(model => model.cmpcode, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> @*Business Unit*@
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">User ID <label class="text-red">*</label></label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.profoid, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "", @maxlength = "10" } })
+                                            @Html.ValidationMessageFor(model => model.profoid, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">User Name <label class="text-red">*</label></label>
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.profname, new { htmlAttributes = new { @class = "form-control", @type = "text", @required = "", @maxlength = "50" } })
+                                            @Html.ValidationMessageFor(model => model.profname, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> @*User ID -- User Name*@
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">
+                                            @{
+                                                if (ViewBag.action == "Update Data")
+                                                {
+                                                    if (UserID == "admin")
+                                                    {
+                                                        @:@(Html.DisplayFor(m => m.profpass))
+                                                    }
+                                                    else
+                                                    {
+                                                        @:Password
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    @:Password
+                                                }
+                                            }
+                                            <label class="text-red">*</label>
+                                        </label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.profpass, new { htmlAttributes = new { @class = "form-control", @type = "password", @required = "", @maxlength = "20" } })
+                                            @Html.ValidationMessageFor(model => model.profpass, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Status</label>
+                                        <div class="col-md-4">
+                                            @Html.DropDownListFor(model => model.profstatus, new List<SelectListItem>
+                                            {
+                                               new SelectListItem { Text="ACTIVE", Value="ACTIVE" },
+                                               new SelectListItem { Text="INACTIVE", Value="INACTIVE" }
+                                            }, new { @class = "form-control select2" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> @*Password -- Status*@
+                    </div>
+                    </div>
+                        // AKHIR BAGIAN HEADER
+
+                        // BAGIAN DETAIL
+                        <div class="box-header">
+                            <h3 class="box-title"><b>Profile Detail</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-md-12">
+                                <div class="nav-tabs-custom">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active" id="divdtlrole">
+                                            <a aria-expanded="true" href="#tab_2" data-toggle="tab">Detail Role Web Apps</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_2">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="pull-left">
+                                                        <button type="button" class="btn btn-primary" id="btnAddToList" data-toggle="modal" data-target="#modal-detail"><b>Add To List</b></button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12" style="overflow-x: auto;">
+                                                        <table id="DataDtl" class="table table-striped" style="width: 100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>alldata</th>
+                                                                    <th>No.</th>
+                                                                    <th>Role Name</th>
+                                                                    <th>Role Desc</th>
+                                                                    <th>Special</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        // AKHIR BAGIAN DETAIL
+
+                        // USER & TOMBOL ACTION
+                        <div class="box-footer">
+                            <div class="pull-left">
+
+                                @{
+                                    if (ViewBag.action == "Update Data")
+                                    {
+                                        @:Last Updated By @(Html.DisplayFor(m => m.lastupduser)) On @(Html.DisplayFor(m => m.lastupdatetime))
+                                    }
+                                    else
+                                    {
+                                        @:created By @(Html.DisplayFor(m => m.createuser)) On @(Html.DisplayFor(m => m.lastupdatetime))
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            @{
+                                <button type="submit" class="btn btn-success btn-md" id="btnSave"><b>Save</b></button>
+                                <a href="@Url.Action("Index")" type="button" class="btn btn-default btn-md"><b>Cancel</b></a>
+                                if (ViewBag.action == "Update Data")
+                                {
+                                    <button type="button" class="btn btn-danger btn-md" id="btnDelete"><b>Delete</b></button>
+                                }
+                            }
+                        </div>
+                        // AKHIR USER & TOMBOL ACTION
+                    }
+            </div>
+        </div>
+    </div>
+
+    @* MODAL UNTUK FORM DETAIL*@
+    <div class="modal fade" id="modal-detail">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Profile Detail Role Data</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12" style="overflow-x: auto;">
+                        <table id="tblModalDtl" class="table table-striped" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>other</th>
+                                    <th></th>
+                                    <th>Role Name</th>
+                                    <th>Role Desc</th>
+                                    <th>Special</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-default btn-md" onclick="AddToDetail()" data-dismiss="modal">Add To Detail</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*AKHIR MODAL UNTUK FORM DETAIL *@
+
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+    $(document).ready(function () {
+
+        var tblModalDtl = $("#tblModalDtl").DataTable({
+            "deferRender": true,
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "visible": false,
+                    "searchable": false
+                },
+                {
+                    "targets": 1,
+                    "checkboxes": {
+                        "selectRow": false
+                    }
+                }
+            ],
+            "select": {
+                "style": 'multi'
+            },
+            "order": [[2, 'asc']]
+        });
+        tblModalDtl.on("draw", function () {
+            $('#tblModalDtl .select2').select2({ theme: 'bootstrap' });
+        });
+
+        var table = $('#DataDtl').DataTable({
+            "paging": false,
+            "bFilter": false,
+            "ordering": false,
+            "bInfo": false,
+            responsive: true,
+            "columnDefs": [
+            {
+                "targets": [0],
+                "visible": false,
+                "searchable": false
+            }]
+        });
+        table.on('click', '#remove', function (e) {
+            $tr = $(this).closest('tr');
+            if ($($tr).hasClass('child')) {
+                $tr = $tr.prev('.parent');
+            }
+            var id = table.row($tr).data()[1];
+            table.row($tr).remove().draw(); SetDataDtl(); FillDetailData();
+            var data = table.rows().data();
+            for (var i = 0 ; i < data.length; i++) {
+                if (data[i][1] >= id) {
+                    var temp = table.row(i).data();
+                    temp[1] = i + 1;
+                    table.row(i).data(temp).invalidate();
+                }
+            }
+            e.preventDefault();
+        });
+        
+
+        FillDetailData();
+
+        if ($('#action').val() == "Update Data") {
+            $('#profoid').attr('readonly', true);
+            $("#btnsearchperson").attr("disabled", true);
+            ChangeType();
+        }
+    })
+
+    function jsDate(jsDate) {
+        if (jsDate == null) {
+            return "";
+        }
+        var myDate = new Date(jsDate.match(/\d+/)[0] * 1);
+        return myDate;
+    }
+
+    function ChangeBusinessUnit() {
+        $("#profname").val("");
+        $("#personoid").val("0");
+        $("#nip").val("");
+        ChangeDDLRoleDetail();
+    }
+
+    function ChangeType() {
+        if ($('#proftype').val() == "Admin")
+            $('#divdtlrole').hide();
+        else
+            $('#divdtlrole').show();
+    }
+
+    function ChangeDDLType() {
+        var stype = $("#DDLType").val();
+        var DDLRoleDetail = $("#DDLRoleDetail");
+        $.ajax({
+            url: "@(Url.Action("InitDDLRoleDetail"))",
+            data: { stype: stype },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                if (data.result == "") {
+                    var markup = "";
+                    $.each(data.tbl, function (key, val) {
+                        markup += "<option value=\'" + val.ifield + "\'>" + val.sfield + "</option>";
+                    });
+                    DDLRoleDetail.html(markup).show();
+                    if ($("#DDLRoleDetail").val() != null && $("#DDLRoleDetail").val() != "")
+                        ChangeDDLRoleDetail();
+                } else {
+                    swal('', data.result, 'error');
+                }
+            },
+            error: function (err) {
+                swal('', err.responseText, 'error');
+            }
+        });
+    }
+
+    function ChangeDDLRoleDetail() {
+        var cmp = $("#cmpcode").val();
+        var stype = $("#DDLType").val();
+        var stype_tx = $("#DDLType option:selected").text();
+        var stypedtl_tx = $("#DDLRoleDetail option:selected").text();
+        var DDLDetail = $("#DDLDetail");
+        $.ajax({
+            url: "@(Url.Action("InitDDLDetail"))",
+            data: { cmp: cmp, stype: stype, stype_tx: stype_tx, stypedtl_tx: stypedtl_tx },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                if (data.result == "") {
+                    var markup = "";
+                    $.each(data.tbl, function (key, val) {
+                        markup += "<option value=\'" + val.ifield + "\'>" + val.sfield + "</option>";
+                    });
+                    DDLDetail.html(markup).show();
+                } else {
+                    swal('', data.result, 'error');
+                }
+            },
+            error: function (err) {
+                swal('', err.responseText, 'error');
+            }
+        });
+    }
+
+    $("#btnAddToList").click(function () {
+        var id = $('#profoid').val();
+        var table = $('#tblModalDtl').DataTable();
+        table.column(1).checkboxes.deselect();
+        table.clear().draw();
+        $.ajax({
+            url: "@(Url.Action("GetDataDetails"))",
+            data: { id: id },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                if (data.result == "") {
+                    var rows = [];
+                    var i = 0;
+                    $.each(data.tbl, function (key, val) {
+                        rows.push([
+                            JSON.stringify(val),
+                            val.seq,
+                            val.rolename,
+                            val.roledesc,
+                            '<select class="form-control select2" id="special-' + val.seq + '"><option value=\'Yes\'>Yes</option><option value=\'No\'>No</option>'
+                        ]);
+                    });
+                    table.rows.add(rows).draw();
+                } else {
+                    swal('', data.result, 'error');
+                    $('#modal-detail').modal('hide');
+                }
+            },
+            error: function (err) {
+                swal('', err.responseText, 'error');
+                $('#modal-detail').modal('hide');
+            }
+        });
+    });
+
+    function AddToDetail() {
+        var tbldtl = $('#DataDtl').DataTable();
+        var table = $('#tblModalDtl').DataTable();
+        var rowsel = table.column(1).checkboxes.selected();
+        $.each(rowsel, function (key, val) {
+            var data = table.row(val - 1).data();
+            var alldata = JSON.parse(data[0]);
+            var special = table.$("#special-" + val).val();
+
+            if (!IsOnDtl(alldata.roleoid)) {
+                var id = tbldtl.rows().data().length + 1;
+                alldata.seq = id;
+                alldata.special = special;
+
+                tbldtl.row.add([
+                    JSON.stringify(alldata),
+                    id,
+                    alldata.rolename,
+                    alldata.roledesc,
+                    '<select class="form-control select2" id="special-' + id + '"><option value=\'Yes\'>Yes</option><option value=\'No\'>No</option>',
+                    '<button id="remove" type="button" class="btn btn-danger btn-xs btn-icon" ><i class="fa fa-times"></i></button>'
+                ]).draw();
+
+                tbldtl.$("#special-" + id).val(special);
+                $('#DataDtl .select2').select2({ theme: 'bootstrap' });
+            }
+        });
+    }
+
+    function IsOnDtl(roleoid) {
+        var table = $('#DataDtl').DataTable();
+        var data = table.rows().data();
+
+        for (var i = 0 ; i < data.length; i++) {
+            var alldata = JSON.parse(data[i][0])
+            if (roleoid == alldata.roleoid) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    function SetDataDtl() {
+        var table = $('#DataDtl').DataTable();
+        var dataDtl = table.rows().data();
+        var rows = [];
+        for (var i = 0 ; i < dataDtl.length; i++) {
+            var alldata = JSON.parse(dataDtl[i][0]);
+            var special = table.$("#special-" + alldata.seq).val();
+            alldata.special = special;
+            alldata.seq = i + 1;
+            rows.push(alldata);
+        }
+        $.ajax({
+            type: 'POST',
+            url: "@(Url.Action("SetDataDetails"))",
+            data: JSON.stringify({ tbl: rows }),
+            dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            processData: false
+        });
+    }
+    
+
+    function FillDetailData() {
+        var url = "@(Url.Action("FillDetailData"))";
+        var table = $('#DataDtl').DataTable();
+        table.clear().draw();
+        $.getJSON(url, function (data) {
+            $.each(data, function (key, val) {
+                table.row.add([
+                    JSON.stringify(val),
+                    val.seq,
+                    val.rolename,
+                    val.roledesc,
+                    '<select class="form-control select2" id="special-' + val.seq + '"><option value=\'Yes\'>Yes</option><option value=\'No\'>No</option>',
+                    '<button id="remove" type="button" class="btn btn-danger btn-xs btn-icon" ><i class="fa fa-times"></i></button>'
+                ]).draw();
+                table.$("#special-" + val.seq).val(val.special).trigger("change");
+            });
+            $('#DataDtl .select2').select2({ theme: 'bootstrap' });
+        });
+    }
+
+    $("#btnSave").click(function () {
+        SetDataDtl();
+    });
+
+    $("#btnDelete").click(function () {
+        var id = $("#profoid").val();
+        var cmp = $("#cmpcode").val();
+        var token = $('input[name="__RequestVerificationToken"]').val()
+        Swal({
+            title: 'Are you sure to DELETE this data?',
+            text: "Deleted data can't be returned!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes, Delete this data!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("Delete"))",
+                    data: { __RequestVerificationToken: token, id: id, cmp: cmp },
+                    success: function (data) {
+                        if (data.result == 'success') {
+                            Swal(
+                                'Deleted!',
+                                'Data has been deleted!',
+                                'success'
+                                )
+                            setTimeout(function () {
+                                location.replace("@(Url.Action("Index"))");
+                            }, 1000);
+                        } else {
+                            Swal(
+                                'Delete data failed!',
+                                data.msg,
+                                'warning'
+                                )
+                        }
+                    },
+                    error: function (error) {
+                        console.dir(error)
+                    }
+                });
+            }
+        })
+    });
+</script>

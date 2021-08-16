@@ -1,0 +1,195 @@
+﻿@model HRM.Models.Media
+
+@{
+    ViewBag.Title = "Media";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>Form Media</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary form-horizontal">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    // BAGIAN HEADER
+                    <div class="box-header">
+                        <h3 class="box-title"><b>Form Media</b></h3>
+                    </div>
+                    <div class="box-body">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @*@Html.HiddenFor(model => model.cmpcode)*@
+                        @Html.HiddenFor(model => model.ID)
+                        @*@Html.HiddenFor(model => model.currres2)
+                        @Html.HiddenFor(model => model.currres3)*@
+                        @Html.Hidden("action")
+                        <div class="container-fluid">
+                            <div class="form-group">
+                                <label class="col-md-2 control-label text-red">@(ViewBag.action)</label>
+                            </div>
+                            @*<div class="row">
+                              
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Code<label class="text-red">*</label></label>
+                                        <div class="col-md-4">
+                                           
+                                            
+                                            @{
+                                                if (ViewBag.action == "Update Data")
+                                                {
+                                                    @Html.EditorFor(model => model.currencycode, new { htmlAttributes = new { @class = "form-control", @type = "text", @readonly="" } })
+                                                }
+                                                else
+                                                {
+                                                   
+                                                    @Html.EditorFor(model => model.currencycode, new { htmlAttributes = new { @class = "form-control", @type = "text",@maxlength=10 } })
+                                                }
+                                            }
+                                            @Html.ValidationMessageFor(model => model.currencycode, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+                            <div class="row">
+                              <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Media ID</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.MEDIA_ID, new { htmlAttributes = new { @class = "form-control", @type = "text",@style="width:300px" } })
+                                            @*@Html.ValidationMessageFor(model => model.currencydesc, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Data Type</label>
+                                        <div class="col-md-4">
+                                            @Html.EditorFor(model => model.DATA_TYPE, new { htmlAttributes = new { @class = "form-control", @type = "text", @style = "width:300px" } })
+                                            @*@Html.ValidationMessageFor(model => model.currencysymbol, "", new { @class = "text-danger" })*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Status</label>
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(model => model.ISENABLE, new List<SelectListItem>
+                                            {
+                                           new SelectListItem { Text="True", Value="True" },
+                                           new SelectListItem { Text="False", Value="False" }
+                                            }, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>*@
+                            </div>
+                            @*<div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Status</label>
+                                        <div class="col-md-4">
+                                            @Html.DropDownListFor(m => m.activeflag, new List<SelectListItem>
+                                            {
+                                                 new SelectListItem { Text="ACTIVE", Value="ACTIVE" },
+                                                 new SelectListItem { Text="INACTIVE", Value="INACTIVE" }
+                                            }, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@                          
+                        </div>
+                   
+                    // USER & TOMBOL ACTION
+                    <div class="box-footer">
+                        <div class="pull-left">
+                            created On @(Html.DisplayFor(m => m.CREATED_AT))
+                            @{
+                                if (ViewBag.action == "Update Data")
+                                {
+                                    <br />
+                                    @:Last Updated On @(Html.DisplayFor(m => m.UPDATED_AT))
+                                }
+                            }
+                        </div>
+                        <div class="pull-right">
+                           
+                                <button type="submit" class="btn btn-success btn-md" ><b>Save</b></button>
+                                <a href="@Url.Action("Index")" type="button" class="btn btn-default btn-md"><b>Cancel</b></a>
+                            @{
+                                if (ViewBag.action == "Update Data")
+                                {
+                                    <button type="button" class="btn btn-danger btn-md" id="btnDelete"><b>Delete</b></button>
+                                }
+                            }
+                               
+                           
+                            
+                        </div>
+                    </div>
+
+                     // AKHIR USER & TOMBOL ACTION
+                                }
+            </div>
+        </div>
+    </div>
+
+  
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+
+    $("#btnDelete").click(function () {
+        var oid = $("#ID").val();
+        var token = $('input[name="__RequestVerificationToken"]').val()
+        Swal({
+            title: 'Are you sure to DELETE this data?',
+            text: "Deleted data can't be returned!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes, Delete this data!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("Delete"))",
+                    data: { __RequestVerificationToken: token, id: oid },
+                    success: function (data) {
+                        if (data.result == 'success') {
+                            Swal(
+                                'Deleted!',
+                                'Data has been deleted!',
+                                'success'
+                                )
+                            setTimeout(function () {
+                                location.replace("@(Url.Action("Index"))");
+                            }, 1000);
+                        } else {
+                            Swal(
+                                'Delete data failed!',
+                                data.msg,
+                                'warning'
+                                )
+                        }
+                    },
+                    error: function (error) {
+                        console.dir(error)
+                    }
+                });
+            }
+        })
+    });
+</script>

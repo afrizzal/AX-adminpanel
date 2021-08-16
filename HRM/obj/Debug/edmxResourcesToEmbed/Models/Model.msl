@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QL_FISModelStoreContainer" CdmEntityContainer="HRMEntities">
+    <EntitySetMapping Name="BENEFITs">
+      <EntityTypeMapping TypeName="HRMModel.BENEFIT">
+        <MappingFragment StoreEntitySet="BENEFIT">
+          <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+          <ScalarProperty Name="ORDERNO" ColumnName="ORDERNO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="HRMModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID_Province" ColumnName="ID_Province" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Districts">
+      <EntityTypeMapping TypeName="HRMModel.District">
+        <MappingFragment StoreEntitySet="District">
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID_City" ColumnName="ID_City" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FAQs">
+      <EntityTypeMapping TypeName="HRMModel.FAQ">
+        <MappingFragment StoreEntitySet="FAQ">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
+          <ScalarProperty Name="QUESTION" ColumnName="QUESTION" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HighlightKatalogues1">
+      <EntityTypeMapping TypeName="HRMModel.HighlightKatalogues">
+        <MappingFragment StoreEntitySet="HighlightKatalogues">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="IMAGE_LOGO" ColumnName="IMAGE_LOGO" />
+          <ScalarProperty Name="IMAGE_COVER" ColumnName="IMAGE_COVER" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HighlightNews1">
+      <EntityTypeMapping TypeName="HRMModel.HighlightNews">
+        <MappingFragment StoreEntitySet="HighlightNews">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="ISENABLE" ColumnName="ISENABLE" />
+          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HighlightPromotions">
+      <EntityTypeMapping TypeName="HRMModel.HighlightPromotion">
+        <MappingFragment StoreEntitySet="HighlightPromotion">
+          <ScalarProperty Name="CONTEN" ColumnName="CONTEN" />
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HighlightStores">
+      <EntityTypeMapping TypeName="HRMModel.HighlightStore">
+        <MappingFragment StoreEntitySet="HighlightStore">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="DEKORUMA" ColumnName="DEKORUMA" />
+          <ScalarProperty Name="TOKOPEDIA" ColumnName="TOKOPEDIA" />
+          <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+          <ScalarProperty Name="YOUTUBE" ColumnName="YOUTUBE" />
+          <ScalarProperty Name="FACEBOOK" ColumnName="FACEBOOK" />
+          <ScalarProperty Name="INSTAGRAM" ColumnName="INSTAGRAM" />
+          <ScalarProperty Name="WORK_HOUR" ColumnName="WORK_HOUR" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="IMAGE_LOGO" ColumnName="IMAGE_LOGO" />
+          <ScalarProperty Name="IMAGE_COVER" ColumnName="IMAGE_COVER" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Katalogues">
+      <EntityTypeMapping TypeName="HRMModel.Katalogue">
+        <MappingFragment StoreEntitySet="Katalogues">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="IMAGE_URL" ColumnName="IMAGE_URL" />
+          <ScalarProperty Name="PDF_URL" ColumnName="PDF_URL" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Media1">
+      <EntityTypeMapping TypeName="HRMModel.Media">
+        <MappingFragment StoreEntitySet="Media">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="URL_IMAGE" ColumnName="URL_IMAGE" />
+          <ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
+          <ScalarProperty Name="MEDIA_ID" ColumnName="MEDIA_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="News">
+      <EntityTypeMapping TypeName="HRMModel.News">
+        <MappingFragment StoreEntitySet="News">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="IMAGE" ColumnName="IMAGE" />
+          <ScalarProperty Name="CONTEN" ColumnName="CONTEN" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="ID_HN" ColumnName="ID_HN" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Promoes">
+      <EntityTypeMapping TypeName="HRMModel.Promo">
+        <MappingFragment StoreEntitySet="Promo">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="URL_IMAGE" ColumnName="URL_IMAGE" />
+          <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="DISCOUNT_PRICE_MEMBER" ColumnName="DISCOUNT_PRICE_MEMBER" />
+          <ScalarProperty Name="DISCOUNT_PRICE" ColumnName="DISCOUNT_PRICE" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="CONTEN" ColumnName="CONTEN" />
+          <ScalarProperty Name="SUBTITLE" ColumnName="SUBTITLE" />
+          <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+          <ScalarProperty Name="ID_HP" ColumnName="ID_HP" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Provinces">
+      <EntityTypeMapping TypeName="HRMModel.Province">
+        <MappingFragment StoreEntitySet="Province">
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stores">
+      <EntityTypeMapping TypeName="HRMModel.Store">
+        <MappingFragment StoreEntitySet="Stores">
+          <ScalarProperty Name="UPDATED_AT" ColumnName="UPDATED_AT" />
+          <ScalarProperty Name="CREATED_AT" ColumnName="CREATED_AT" />
+          <ScalarProperty Name="FASILITAS" ColumnName="FASILITAS" />
+          <ScalarProperty Name="ZIPCODE" ColumnName="ZIPCODE" />
+          <ScalarProperty Name="ID_DISTRICT" ColumnName="ID_DISTRICT" />
+          <ScalarProperty Name="ID_CITY" ColumnName="ID_CITY" />
+          <ScalarProperty Name="ID_PROVINCE" ColumnName="ID_PROVINCE" />
+          <ScalarProperty Name="STREET" ColumnName="STREET" />
+          <ScalarProperty Name="IMAGE_URL" ColumnName="IMAGE_URL" />
+          <ScalarProperty Name="LOGITUDE" ColumnName="LOGITUDE" />
+          <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+          <ScalarProperty Name="GOOGLE_ADDRESS" ColumnName="GOOGLE_ADDRESS" />
+          <ScalarProperty Name="WORK_HOUR" ColumnName="WORK_HOUR" />
+          <ScalarProperty Name="WHATSAPP" ColumnName="WHATSAPP" />
+          <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="STORE_HLPROMOTION" TypeName="HRMModel.STORE_HLPROMOTION" StoreEntitySet="STORE_HLPROMOTION">
+      <EndProperty Name="Store">
+        <ScalarProperty Name="ID" ColumnName="ID_S" />
+      </EndProperty>
+      <EndProperty Name="HighlightPromotion">
+        <ScalarProperty Name="ID" ColumnName="ID_HP" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="STORE_NEWS" TypeName="HRMModel.STORE_NEWS" StoreEntitySet="STORE_NEWS">
+      <EndProperty Name="Store">
+        <ScalarProperty Name="ID" ColumnName="ID_S" />
+      </EndProperty>
+      <EndProperty Name="News">
+        <ScalarProperty Name="ID" ColumnName="ID_N" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="STORE_PROMO" TypeName="HRMModel.STORE_PROMO" StoreEntitySet="STORE_PROMO">
+      <EndProperty Name="Store">
+        <ScalarProperty Name="ID" ColumnName="ID_S" />
+      </EndProperty>
+      <EndProperty Name="Promo">
+        <ScalarProperty Name="ID" ColumnName="ID_P" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

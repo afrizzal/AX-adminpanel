@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Waiting for Approval";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content-header">
+    <h1>List Of @ViewBag.TransName (Waiting for Approval)</h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12" style="overflow-x: auto;">
+                            <span id="varforlink" style="display: none"></span>
+                            <table id="dtlistapp" class="table table-striped" style="width: 100%;"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pull-right" id="registerclosed" style="display: none;">
+            <button type="button" class="btn btn-warning btn-md" id="btnClosed"><b>Closed Register</b></button>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script language="javascript" type="text/javascript">
+    var tblname = "@ViewBag.tblname";
+
+    $(document).ready(function () {
+        $.ajax({
+            url: "@(Url.Action("GetDataList"))",
+            data: { tblname: tblname },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var cols = [];
+                var rows = [];
+
+                if (data.msg == "") {
+                    var hidecols = [0];
+                    $.each(data.colname, function (key, val) {
+                        var obj = {
+                            title: val
+                        }
+                        cols.push(obj);
+                    });
+
+                    $.each(data.rows, function (key, val) {
+                        var row = Object.values(val);
+                        rows.push(row);
+                    });
+               
+                    if (tblname == "ql_trnregistermst") {
+                        $('#dtlistapp').dataTable({
+                            "columns": cols,
+                            "data": rows,
+                            "deferRender": true,
+                            "columnDefs": [
+                                {
+                                    "targets": hidecols,
+                                    "visible": false,
+                                    "searchable": false
+                                },
+                                {
+                                    "targets": [-1],
+                                    "orderable": false,
+                                    "checkboxes": {
+                                        "selectRow": false
+                                    }
+                                }
+                            ],
+                            "select": {
+                                "style": 'multi'
+                            }
+                        });
+                    } else {
+                        $('#dtlistapp').dataTable({
+                            "columns": cols,
+                            "data": rows,
+                            "columnDefs": [
+                                { "targets": hidecols, "visible": false, "searchable": false }
+                            ]
+                        });
+                    }
+                }
+                else
+                {
+                    swal('', data.msg, 'info');
+                }
+            },
+            error: function (err) {
+                swal('', err, 'error');
+            }
+        });
+        if (tblname == "ql_trnregistermst")
+            $('#registerclosed').show();
+        else
+            $('#registerclosed').hide();
+    });
+
+    $('#btnClosed').click(function () {
+        var table = $('#dtlistapp').DataTable();
+        var rowsel = table.column(-1).checkboxes.selected();
+        var id = "";
+        $.each(rowsel, function (key, val) {
+            var data = table.row(val - 1).data();
+            $('#varforlink').html(data[1]);
+            id += $('#varforlink').text() + "x";
+        });
+
+        Swal({
+            title: 'Are you sure to Closed Checked data?',
+            text: "",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes, Closed this data!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("ApprovalMRReg"))",
+                    data: {id: id },
+                    success: function (data) {
+                        if (data.result == 'success')
+                            Swal({
+                                title: 'Data has been Closed!',
+                                html: data.msg,
+                                type: 'success',
+                                allowOutsideClick: false
+                            }).then(function () {
+                                location.replace("@(Url.Action("Index"))/" + tblname);
+                            });
+                        else
+                            Swal('Closed data failed!', data.msg, 'error');
+                    },
+                    error: function (err) {
+                        swal('', err.responseText, 'error');
+                    }
+                });
+            }
+        });
+    })   
+</script>

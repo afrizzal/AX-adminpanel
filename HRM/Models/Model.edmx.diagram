@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7a522a698e674bc38ec885fcf7c44f5d" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="HRMModel.BENEFIT" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="HRMModel.City" Width="1.5" PointX="3" PointY="2.75" />
+        <EntityTypeShape EntityType="HRMModel.District" Width="1.5" PointX="5.25" PointY="2.875" />
+        <EntityTypeShape EntityType="HRMModel.FAQ" Width="1.5" PointX="7.75" PointY="7.75" />
+        <EntityTypeShape EntityType="HRMModel.HighlightKatalogues" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="HRMModel.HighlightNews" Width="1.5" PointX="3" PointY="15.625" />
+        <EntityTypeShape EntityType="HRMModel.HighlightPromotion" Width="1.5" PointX="5.25" PointY="7.375" />
+        <EntityTypeShape EntityType="HRMModel.HighlightStore" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="HRMModel.Katalogue" Width="1.5" PointX="9.75" PointY="5.75" />
+        <EntityTypeShape EntityType="HRMModel.Media" Width="1.5" PointX="9.75" PointY="9.75" />
+        <EntityTypeShape EntityType="HRMModel.News" Width="1.5" PointX="5.25" PointY="15.5" />
+        <EntityTypeShape EntityType="HRMModel.Promo" Width="1.5" PointX="5.25" PointY="10.875" />
+        <EntityTypeShape EntityType="HRMModel.Province" Width="1.5" PointX="0.75" PointY="2.875" />
+        <EntityTypeShape EntityType="HRMModel.Store" Width="1.5" PointX="7.5" PointY="1.125" />
+        <AssociationConnector Association="HRMModel.FK_City_Province" />
+        <AssociationConnector Association="HRMModel.FK_District_City" />
+        <AssociationConnector Association="HRMModel.FK_Stores_City" />
+        <AssociationConnector Association="HRMModel.FK_Stores_District" />
+        <AssociationConnector Association="HRMModel.FK_News_HighlightNews" />
+        <AssociationConnector Association="HRMModel.FK_Promo_HighlightPromotion" />
+        <AssociationConnector Association="HRMModel.FK_Stores_Province" />
+        <AssociationConnector Association="HRMModel.STORE_HLPROMOTION" />
+        <AssociationConnector Association="HRMModel.STORE_NEWS" />
+        <AssociationConnector Association="HRMModel.STORE_PROMO" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

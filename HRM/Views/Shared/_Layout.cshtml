@@ -1,0 +1,933 @@
+﻿@{
+    string CompanyName = System.Configuration.ConfigurationManager.AppSettings["CompanyName"];
+}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="logo-icon" sizes="76x76" href="~/Images/Integra-logo.png">
+        <link rel="icon" type="image/png" href="~/Images/Integra-logo.png">
+        <title>@ViewBag.Title | @(CompanyName)</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!-- Bootstrap 3.3.7 -->
+        <link href="~/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- Font Awesome -->
+        <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- Ionicons -->
+        <link href="~/Content/ionicons.min.css" rel="stylesheet" />
+        <!-- DataTables -->
+        <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/dataTables.checkboxes.css" rel="stylesheet" />
+        <link href="~/Content/scroller.bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Content/scroller.dataTables.min.css" rel="stylesheet" />
+        <link href="~/Content/select.dataTables.min.css" rel="stylesheet" />
+        <!-- Theme style -->
+        <link href="~/Content/dist/css/AdminLTE.min.css" rel="stylesheet" />
+        <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+        <link href="~/Content/_all-skins.min.css" rel="stylesheet" />
+        <!-- Daterange picker -->
+        <link href="~/Content/daterangepicker.css" rel="stylesheet" />
+        <!-- bootstrap wysihtml5 - text editor -->
+        <link href="~/Content/bootstrap3-wysihtml5.min.css" rel="stylesheet" />
+        <!-- Select2 -->
+        <link href="~/Content/select2/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="~/Content/select2/dist/css/select2-bootstrap.min.css" rel="stylesheet" />
+        <!-- bootstrap datepicker -->
+        <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+        <!-- Bootstrap time Picker -->
+        <link href="~/Content/timepicker.less" rel="stylesheet">
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link href="~/Content/iCheck/icheck-all.css" rel="stylesheet" />
+        <!-- Bootstrap Color Picker -->
+        <link href="~/Content/bootstrap-colorpicker.min.css" rel="stylesheet" />
+        <link href="~/Content/dist/css/style.css" rel="stylesheet" />
+        <!--  style for Sweet Alert -->
+        <link href="~/Content/sweetalert2.min.css" rel="stylesheet" />
+        <!--  style for Chart -->
+        <link href="~/Content/Chart.min.css" rel="stylesheet" />
+        <!--  style for Inputmask -->
+        <link href="~/Content/inputmask.css" rel="stylesheet" />
+        <!--  style for Timeout Dialog -->
+        <link href="~/Content/timeout-dialog.css" rel="stylesheet" />
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" rel="stylesheet">
+        <style>
+                select[readonly].select2 + .select2-container {
+                    pointer-events: none;
+                    touch-action: none;
+                }
+
+                select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+                    background: #eee;
+                    box-shadow: none;
+                }
+
+                canvas {
+                    -moz-user-select: none;
+                    -webkit-user-select: none;
+                    -ms-user-select: none;
+                }
+
+                .form-control {
+                    display: block;
+                    width: 100%;
+                    height: 34px;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    line-height: 1.42857143;
+                    color: #555555;
+                    background-color: #fff;
+                    background-image: none;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+                    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                    transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+                    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+                }
+
+                    .form-control:focus {
+                        border-color: #66afe9;
+                        outline: 0;
+                        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+                        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6);
+                    }
+
+                /*Bootstrap button outline override*/
+                .btn-outline {
+                    background-color: transparent;
+                    color: inherit;
+                    transition: all .5s;
+                }
+
+                .btn-primary.btn-outline {
+                    border-color: #428bca;
+                    color: #428bca;
+                }
+
+                .btn-success.btn-outline {
+                    border-color: #5cb85c;
+                    color: #5cb85c;
+                }
+
+                .btn-info.btn-outline {
+                    border-color: #5bc0de;
+                    color: #5bc0de;
+                }
+
+                .btn-warning.btn-outline {
+                    border-color: #f0ad4e;
+                    color: #f0ad4e;
+                }
+
+                .btn-danger.btn-outline {
+                    border-color: #d9534f;
+                    color: #d9534f;
+                }
+
+                    .btn-primary.btn-outline:hover,
+                    .btn-success.btn-outline:hover,
+                    .btn-info.btn-outline:hover,
+                    .btn-warning.btn-outline:hover,
+                    .btn-danger.btn-outline:hover {
+                        color: #fff;
+                    }
+
+                /*select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow, select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+                display: none;
+            }*/
+        </style>
+    </head>
+
+    <body class="hold-transition skin-blue sidebar-mini fixed">
+        @{
+            var url = Request.RawUrl;
+            HRM.Models.HRMEntities db = new HRM.Models.HRMEntities();
+            var PreviousUrl = "";
+            if (System.Web.HttpContext.Current.Request.UrlReferrer != null)
+            {
+                PreviousUrl = System.Web.HttpContext.Current.Request.UrlReferrer.AbsolutePath.ToString();
+            }
+            string UserID = ((Session["UserID"] == null) ? "-" : Session["UserID"].ToString());
+            string MemberName = ((Session["UserName"] == null) ? "-" : Session["UserName"].ToString());
+            string MemberImage = "~/Images/user2-160x160.jpg";
+            string CompanyName2 = System.Configuration.ConfigurationManager.AppSettings["CompanyName2"];
+            string CompanyMini = System.Configuration.ConfigurationManager.AppSettings["CompanyMini"];
+            DateTime ServerTime = db.Database.SqlQuery<DateTime>("select getdate()").FirstOrDefault();
+        }
+        <div class="wrapper">
+            <!-- Main Header -->
+            <header class="main-header">
+                <!-- Logo -->
+                <a href="~/Home/Index" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini" style="color:#555555"><b><!--<img src="~/Images/Integra-logo.png" width="30" />-->@(CompanyMini)</b></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg" style="color:#555555;font-size:large;"><b><!--<img src="~/Images/image-logo.png" width="100">-->@(CompanyName2)</b></span>
+                </a>
+                <!-- Header Navbar -->
+                <nav class="navbar navbar-static-top">
+                    <!-- Sidebar toggle button-->
+                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <!-- Navbar Right Menu -->
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" title="Server Time">
+                                    <span id="servertime"></span>
+                                </a>
+                            </li>
+                            <!-- Notifications: style can be found in dropdown.less -->
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span class="label label-warning" id="notiftotal"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="header" id="notifheader"></li>
+                                    <li>
+                                        <!-- inner menu: contains the actual data -->
+                                        <ul class="menu" id="notiflist"></ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- User Account: style can be found in dropdown.less -->
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img src="@Url.Content(MemberImage)" class="user-image" alt="User Image" />
+                                    <span class="hidden-xs">@(UserID)</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <!-- User image -->
+                                    <li class="user-header" style="min-height: 175px;height: auto;">
+                                        <img src="@Url.Content(MemberImage)" class="img-circle" alt="User Image" />
+                                        <p>
+                                            @(MemberName)
+                                        </p>
+                                    </li>
+                                    <!-- Menu Footer-->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="~/Profile/Update/@(UserID)" class="btn btn-default btn-flat">Profile</a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="~/Profile/Logout" class="btn btn-default btn-flat">Sign out</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel (optional) -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="@Url.Content(MemberImage)" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p>@(MemberName)</p>
+                            <!-- Status -->
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- Sidebar Menu -->
+                    @Html.Partial("~/Views/Shared/_Menu.cshtml");
+                    <!-- /.sidebar-menu -->
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Main content -->
+                @RenderBody()
+                <!-- /.content -->
+            </div>
+            <div id="callBackModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content" id="callBackModalContent">
+                    </div>
+                </div>
+            </div>
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">x</span>
+                            </button>
+                            <h4 class="modal-title text-bold"></h4>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer text-center">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <div class="modal fade" id="modal-login">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Session over, please login again!</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.TextBox("userIdPopupLogin", @UserID, new { @class = "form-control", @placeholder = "User ID", @readonly = "" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        @Html.Password("userPasswordPopupLogin", "", new { @class = "form-control", @placeholder = "Password" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button type="button" class="btn btn-primary btn-md" id="btnLoginPopUpLogin">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Back To Top-->
+            <button onclick="topFunction()" id="scroll" title="Go to top">Top</button>
+            <!-- /.content-wrapper -->
+            <!-- Main Footer -->
+            <footer class="main-footer">
+                <!-- To the right -->
+                <div class="pull-right hidden-xs">
+                    KANA - Furnish your Story.
+                </div>
+                <!-- Default to the left -->
+                <strong>Copyright &copy;2020 <a href="https://kanafurniture.com">KANA Furniture</a>.</strong> All rights reserved.
+            </footer>
+            <div class="control-sidebar-bg"></div>
+        </div>
+        <!-- ./wrapper -->
+
+        <div id="domMessage" style="display: none;">
+            <h1><span class="fa fa-spinner fa-spin"></span> Please wait...</h1>
+        </div>
+
+        <!-- REQUIRED JS SCRIPTS -->
+        <!-- jQuery 3 -->
+        <script src="~/Scripts/jquery.min.js"></script>
+        <!-- jQuery UI 1.11.4 -->
+        <script src="~/Scripts/jquery-ui.min.js"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+            $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <!-- Bootstrap 3.3.7 -->
+        <script src="~/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="~/Scripts/jquery.dataTables.min.js"></script>
+        <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+        <script src="~/Scripts/dataTables.checkboxes.min.js"></script>
+        <script src="~/Scripts/dataTables.scroller.min.js"></script>
+        <script src="~/Scripts/dataTables.select.min.js"></script>
+        <!-- Select2 -->
+        <script src="~/Content/select2/dist/js/select2.full.min.js"></script>
+        <!-- InputMask -->
+        @*<script src="~/Scripts/inputmask.js"></script>
+            <script src="~/Scripts/jquery.inputmask.js"></script>
+            <script src="~/Scripts/inputmask.date.extensions.js"></script>
+            <script src="~/Scripts/jquery.inputmask.date.extensions.js"></script>
+            <script src="~/Scripts/jquery.inputmask.extensions.js"></script>*@
+        <script src="~/Scripts/jquery.inputmask.bundle.min.js"></script>
+        @*<script src="~/Scripts/jquery.maskMoney.min.js"></script>*@
+        <!-- Sparkline -->
+        <script src="~/Scripts/jquery.sparkline.min.js"></script>
+        <!-- jQuery Knob Chart -->
+        <script src="~/Scripts/jquery.knob.min.js"></script>
+        <!-- daterangepicker -->
+        <script src="~/Scripts/moment.min.js"></script>
+        <script src="~/Scripts/daterangepicker.js"></script>
+        <!-- Bootstrap WYSIHTML5 -->
+        <script src="~/Scripts/bootstrap3-wysihtml5.all.min.js"></script>
+        <!-- Slimscroll -->
+        <script src="~/Scripts/jquery.slimscroll.min.js"></script>
+        <!-- iCheck 1.0.1 -->
+        <script src="~/Scripts/icheck.min.js"></script>
+        <!-- FastClick -->
+        <script src="~/Scripts/fastclick.js"></script>
+        <!-- AdminLTE App -->
+        <script src="~/Content/dist/js/adminlte.min.js"></script>
+        <!-- bootstrap datepicker -->
+        <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+        <!-- bootstrap color picker -->
+        <script src="~/Scripts/bootstrap-colorpicker.min.js"></script>
+        <!-- bootstrap time picker -->
+        <script src="~/Scripts/bootstrap-timepicker.min.js"></script>
+        <!--  Plugin for Sweet Alert -->
+        <script src="~/Scripts/sweetalert2.min.js"></script>
+        <script src="~/Scripts/jquery.blockUI.js"></script>
+        <script src="~/Scripts/Chart.min.js"></script>
+        <script src="~/Scripts/timeout-dialog.js"></script>
+
+        <script>
+        var domMessage = $('#domMessage');
+        $(document)
+            .ajaxStart(function () {
+                $.blockUI({
+                    baseZ: 1500,
+                    message: domMessage
+                })
+            })
+            .ajaxStop($.unblockUI);
+
+        $(document).ajaxStop($.unblockUI);
+
+        @*$(function () {
+            var fnTimeOut = function () {
+                jQuery.timeoutDialog.setupDialogTimer({
+                    timeout: 120,
+                    countdown: 60,
+                    logout_redirect_url: '@Url.Action("Logout", "Profile")',
+                    keep_alive_url: '@Url.Action("Keepalive", "Profile")'
+                });
+            };
+            fnTimeOut();
+        });*@
+
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#scroll').fadeIn();
+                } else {
+                    $('#scroll').fadeOut();
+                }
+            });
+            $('#scroll').click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+        });
+        </script>
+
+        <script>
+            $(function () {
+                //Initialize Select2 Elements
+                $('.select2').select2({ theme: 'bootstrap' });
+                //Datemask dd/mm/yyyy
+                $('.datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' });
+                //Datemask2 mm/dd/yyyy
+                $('.datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' });
+                //$('.datemask2').inputmask('datetime', {
+                //    inputFormat: "mm/dd/yyyy",
+                //    showMaskOnHover: true,
+                //    showMaskOnFocus: true
+                //});
+                //Money Euro
+                $('[data-mask]').inputmask();
+                //Currency Mask
+                //$(".money").inputmask({
+                //    'alias': 'decimal',
+                //    'groupSeparator': ',',
+                //    'removeMaskOnSubmit': true,
+                //    'autoUnmask': true
+                //});
+                $('.money').inputmask('decimal', {
+                    autoGroup: true,
+                    groupSeparator: ",",
+                    removeMaskOnSubmit: true,
+                    autoUnmask: true
+                });
+                //NPWP Mask dd/mm/yyyy
+                $('.npwpmask').inputmask('99.999.999.9-999.999', { 'placeholder': '__.___.___._-___.___' });
+                //Date range picker
+                $('.daterangepicker').daterangepicker({
+                    showDropdowns: true,
+                    startDate: moment().format('MM/01/YYYY'),
+                    locale: {
+                        format: 'MM/DD/YYYY'
+                    }
+                }).inputmask('99/99/9999 - 99/99/9999', { 'placeholder': 'mm/dd/yyyy - mm/dd/yyyy' });
+                $('.daterangepickernodef').daterangepicker({
+                    showDropdowns: true
+                });
+                //Date range picker with time picker
+                $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' });
+                //Date picker
+                $('.datepicker').datepicker({
+                    format: 'mm/dd/yyyy',
+                    todayHighlight: true,
+                    autoclose: true,
+                    orientation: "bottom auto",
+                    keyboardNavigation: false
+                });
+                $('.datepicker_from').datepicker({
+                    format: 'mm/dd/yyyy',
+                    todayHighlight: true,
+                    autoclose: true,
+                    orientation: "bottom auto",
+                    keyboardNavigation: false
+                }).datepicker('setDate', moment().format('MM/01/YYYY'));
+                $('.datepicker_to').datepicker({
+                    format: 'mm/dd/yyyy',
+                    todayHighlight: true,
+                    autoclose: true,
+                    orientation: "bottom auto",
+                    keyboardNavigation: false
+                }).datepicker('setDate', moment().format('MM/DD/YYYY'));
+                //iCheck for checkbox and radio inputs
+                $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+                    checkboxClass: 'icheckbox_minimal-blue',
+                    radioClass: 'iradio_minimal-blue'
+                });
+                //Red color scheme for iCheck
+                $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+                    checkboxClass: 'icheckbox_minimal-red',
+                    radioClass: 'iradio_minimal-red'
+                });
+                //Flat red color scheme for iCheck
+                $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+                //Timepicker
+                $('.timepicker').inputmask("hh:mm", { placeholder: "HH:MM", hourFormat: 24 });
+            })
+
+            var pleaseWaitDialog;
+            pleaseWaitDialog = pleaseWaitDialog || (function () {
+                var pleaseWaitDiv = $('<div class="modal fade" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h1>Please wait while we are generating your report...</h1></div><div class="modal-body"><div class="progress active"><div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" style="width: 100%"></div></div></div></div></div></div>');
+                return {
+                    show: function () {
+                        pleaseWaitDiv.modal();
+                    },
+                    hide: function () {
+                        pleaseWaitDiv.modal('hide');
+                    },
+
+                };
+            })();
+        </script>
+
+        <script>
+        var nIntervId;
+        var d = new Date("@(ServerTime.ToString())");
+
+        function startTimer() {
+            nIntervId = setInterval(setTimer, 1000);
+        }
+
+        function setTimer() {
+            d = moment(d).add(1, 's').toDate();
+            $("#servertime").html(moment(d).format('DD MMM YYYY HH:mm:ss'))
+        }
+
+        function stopTimer() {
+            clearInterval(nIntervId);
+        }
+
+        function getNotification() {
+            var notiftotal = $("#notiftotal");
+            var notifheader = $("#notifheader");
+            var notiflist = $("#notiflist");
+            var UserID = "@(UserID)";
+            notiftotal.removeClass("label-warning");
+            notiftotal.html('<i class="fa fa-refresh fa-spin"></i>');
+            $.ajax({
+                url: "@(Url.Action("GetNotification", "Home"))",
+                data: { UserID: UserID },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var listnotif = "";
+                    var total = 0;
+                    $.each(data.dtnotifapp, function (key, val) {
+                        listnotif += '<li><a href="' + val.notiflink + '"><i class="' + val.notifcss + '"></i> ' + val.notifmsg + '</a></li>';
+                        total += val.notifqty;
+                    });
+                    notiftotal.html(total);
+                    if (total == 0) {
+                        notiftotal.hide();
+                    } else {
+                        notiftotal.show();
+                    }
+                    notifheader.html(total + " Notification");
+                    notiflist.html(listnotif);
+                    if ($("#divnotiflistapp").length > 0) {
+                        SetNotification(data);
+                    }
+                },
+                error: function (xhr, status, p3, p4) {
+                    console.dir(xhr);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            startTimer();
+            getNotification();
+            $('.datatable').DataTable();
+        });
+        </script>
+
+        <script>
+        //Prevent Enter to submit if not last input.
+        //$('body').on('keydown', 'input, select', function (e) {
+        //    var self = $(this)
+        //      , form = self.parents('form:eq(0)')
+        //      , focusable
+        //      , next
+        //    ;
+        //    if (e.keyCode == 13) {
+        //        focusable = form.find('input,a,select,button,textarea').filter(':visible');
+        //        next = focusable.eq(focusable.index(this) + 1);
+        //        if (next.length) {
+        //            next.focus();
+        //        } else {
+        //            form.submit();
+        //        }
+        //        return false;
+        //    }
+        //});
+
+        $('.datepicker_from').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        $('.datepicker_to').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        function toDate(toDate) { //Convert JsonStringDate to Date
+            if (toDate == null) {
+                return "";
+            }
+            var myDate = new Date(toDate.match(/\d+/)[0] * 1);
+            return myDate;//.format("mm/dd/yyyy HH:MM");
+        }
+
+        function addCommas(x) {
+            if (x == null | x == '') { return '' };
+            x = tNumber(x);
+            var parts = x.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return parts.join(".");
+        }
+
+        function removeCommas(sStr) {
+            sStr = sStr.toString().replace(/\,/g, '');
+            return sStr
+        }
+
+        function tRound(val, r) {
+            return Math.round(val * Math.pow(10, r)) / Math.pow(10, r)
+        }
+
+        function tNumber(val) {
+            val = parseFloat(val.toString().replace(/\,/g, ''));
+            if (isNaN(val))
+                val = 0;
+            return val;
+        }
+
+        //function unmaskmoney() {
+        //    //var value = $(".money").maskMoney('unmasked')[0];
+        //    //$(".money").val(value);
+        //    //$(".money").maskMoney('destroy');
+        //    $(".money").inputmask('remove');
+        //    return false;
+        //}
+
+        $(document).ready(function () {
+            $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+                if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+                    $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+                }
+            });
+
+            //$(".money").inputmask({ alias: "currency", prefix: '', removeMaskOnSubmit: true, autoUnmask: true });
+            //$(".money").maskMoney({
+            //    allowNegative: true,
+            //    reverse: false,
+            //    selectAllOnFocus: true,
+            //    formatOnBlur: true,
+            //    precision: 4
+            //});
+            $(".numberonly").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl/cmd+A
+                    (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: Ctrl/cmd+V
+                    (e.keyCode == 86 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: Ctrl/cmd+C
+                    (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: Ctrl/cmd+X
+                    (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+                    // Allow: home, end, left, right
+                    (e.keyCode >= 35 && e.keyCode <= 39)) {
+                    // let it happen, don't do anything
+                    return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+            $(".numberonly").keyup(function (e) {
+                // Clear String after paste
+                if ((e.keyCode == 86 || (e.ctrlKey === true || e.metaKey === true))) {
+                    var $this = $(this)
+                    if ($this.val() != $this.val().replace(/[^\d\.]/g, "")) {
+                        $this.val($this.val().replace(/[^\d\.]/g, ""));
+                    }
+                }
+            });
+
+            $(".allownumericwithdecimal").on("keypress keyup blur", function (event) {
+                //this.value = this.value.replace(/[^0-9\.]/g,'');
+                $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+                if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+
+            $(".allownumericwithoutdecimal").on("keypress keyup blur", function (event) {
+                $(this).val($(this).val().replace(/[^\d].+/, ""));
+                if ((event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+
+            $(".allownumericwithNegative").on("keypress keyup blur", function (event) {
+                $(this).val($(this).val().replace(/[^0-9\.-]/g, ''));
+                if ((event.which != 45 || $(this).val().indexOf('-') != -1) && (event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                    event.preventDefault();
+                }
+            });
+
+            var OpenAuthorizationPopup = @Html.Raw(Json.Encode(this.ViewData["OpenAuthorizationPopup"]));
+            if (OpenAuthorizationPopup == "Open")
+                $('#modal-login').modal('show');
+        });
+
+        function SetDataToTableNotification(tablename, colgroup, data) {
+            var table = $(tablename).DataTable();
+            table.destroy();
+            $(tablename).empty();
+
+            var coldate = [];
+            var colnum = [];
+            var cols = [];
+            var colidx = 0;
+            $.each(data.tblcols, function (key, val) {
+                if (val.indexOf("num_") != -1) {
+                    colnum.push(colidx);
+                    val = val.replace("num_", "");
+                }
+                var obj = { title: val };
+                cols.push(obj);
+                if (val.toUpperCase().indexOf("DATE") != -1)
+                    coldate.push(colidx);
+                colidx++;
+            });
+
+            var rows = [];
+            var total = 0;
+            $.each(data.tblrows, function (key, val) {
+                var row = Object.values(val);
+                rows.push(row);
+                total++;
+            });
+
+            if (total > 0) {
+                if (colgroup != null) {
+                    table = $(tablename).DataTable({
+                        "columns": cols,
+                        "data": rows,
+                        "deferRender": true,
+                        "bInfo": false,
+                        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+                        "columnDefs": [
+                        {
+                            "visible": false,
+                            "targets": colgroup
+                        },
+                        {
+                            "type": "date",
+                            "targets": coldate
+                        },
+                        {
+                            "className": "text-right",
+                            "targets": colnum
+                        }],
+                        "drawCallback": function (settings) {
+                            var api = this.api();
+                            var rows = api.rows({ page: 'current' }).nodes();
+                            var last = null;
+                            api.column(colgroup, { page: 'current' }).data().each(function (group, i) {
+                                if (last !== group) {
+                                    $(rows).eq(i).before(
+                                        '<tr class="group"><td colspan="' + (colidx + 1) + '">' + group + '</td></tr>'
+                                    );
+                                    last = group;
+                                }
+                            });
+                        }
+                    });
+                    $(tablename + ' tbody').on('click', 'tr.group', function () {
+                        var currentOrder = table.order()[0];
+                        if (currentOrder[0] === colgroup && currentOrder[1] === 'asc') {
+                            table.order([colgroup, 'desc']).draw();
+                        }
+                        else {
+                            table.order([colgroup, 'asc']).draw();
+                        }
+                    });
+                }
+                else {
+                    table = $(tablename).DataTable({
+                        "columns": cols,
+                        "data": rows,
+                        "deferRender": true,
+                        "bInfo": false,
+                        "lengthMenu": [5, 10, 25, 50, 75, 100],
+                        "columnDefs": [
+                        {
+                            "type": "date",
+                            "targets": coldate
+                        },
+                        {
+                            "className": "text-right",
+                            "targets": colnum
+                        }]
+                    });
+                }
+            }
+            return total;
+        }
+
+        $('#modal-login').on('shown.bs.modal', function () {
+            $('#userPasswordPopupLogin').focus();
+        });
+
+        $("#btnLoginPopUpLogin").click(function () {
+            var userPasswordPopupLogin = $('#userPasswordPopupLogin').val();
+            if (userPasswordPopupLogin == "" || userPasswordPopupLogin == null)
+                swal('', 'Please fill password!', 'warning');
+            else
+            {
+                var userIdPopupLogin = $('#userIdPopupLogin').val();
+                $.ajax({
+                    url: "@(Url.Action("LoginAgain", "Profile"))",
+                    data: { userid: userIdPopupLogin, password: userPasswordPopupLogin },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        if (data.result == "") {
+                            $('#userPasswordPopupLogin').val('');
+                            $('#modal-login').modal('hide');
+                        } else
+                            swal('', data.result, 'error');
+                    },
+                    error: function (err) {
+                        swal('', err.responseText, 'error');
+                    }
+                });
+            }
+        });
+
+        $("#userPasswordPopupLogin").on("keypress", function (event) {
+            if (event.which == 13) {
+                $("#btnLoginPopUpLogin").click();
+                return false;
+            }
+        });
+
+        $("#btnSave").click(function () {
+            var res = true;
+            $.ajax({url: "@(Url.Action("IsSessionExpired", "Profile"))", async: false, success: function (result) {
+                if (result == true)
+                    res = false;
+            }});
+            if (res == false)
+                $('#modal-login').modal('show');
+            return res;
+        });
+
+        $("#btnSaveClose").click(function () {
+            var res = true;
+            $.ajax({url: "@(Url.Action("IsSessionExpired", "Profile"))", async: false, success: function (result) {
+                if (result == true)
+                    res = false;
+            }});
+            if (res == false)
+                $('#modal-login').modal('show');
+            return res;
+        });
+
+        $("#btnSendForApproval").click(function () {
+            var res = true;
+            $.ajax({url: "@(Url.Action("IsSessionExpired", "Profile"))", async: false, success: function (result) {
+                if (result == true)
+                    res = false;
+            }});
+        if (res == false)
+            $('#modal-login').modal('show');
+        return res;
+        });
+
+        $("#btnPost").click(function () {
+            var res = true;
+            $.ajax({url: "@(Url.Action("IsSessionExpired", "Profile"))", async: false, success: function (result) {
+                if (result == true)
+                    res = false;
+            }});
+        if (res == false)
+            $('#modal-login').modal('show');
+        return res;
+        });
+
+        $("#btnPosting").click(function () {
+            var res = true;
+            $.ajax({url: "@(Url.Action("IsSessionExpired", "Profile"))", async: false, success: function (result) {
+                if (result == true)
+                    res = false;
+            }});
+        if (res == false)
+            $('#modal-login').modal('show');
+        return res;
+        });
+        </script>
+    </body>
+
+</html>
